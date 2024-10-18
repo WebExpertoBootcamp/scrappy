@@ -4,6 +4,11 @@ services:
     tty: true
     ports:
       - "3000:3000"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: sa123456
+      DATABASE_PORT: 5432
+      DATABASE_HOST: db
     volumes:
       - .:/scrappy # Monta la carpeta raiz 'scrappy' de tu sistema local en '/scrappy' dentro del contenedor
     working_dir: /scrappy # Define el directorio de trabajo para Rails

@@ -2,13 +2,21 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: postgres
-  password: sa123456
-  host: db # Este es el nombre del servicio en docker-compose.yml
+  username: <%= ENV["POSTGRES_USER"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  port: <%= ENV["DATABASE_PORT"] %>
+  host: <%= ENV["DATABASE_HOST"] %>
+
+
+  #username: postgres
+  #password: sa123456
+  #host: db # Este es el nombre del servicio en docker-compose.yml
 
 development:
   <<: *default
   database: scrappy_development
+
+
 
 test:
   <<: *default
