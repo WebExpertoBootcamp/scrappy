@@ -1,0 +1,2 @@
+module ProductHistoriesHelper
+end
