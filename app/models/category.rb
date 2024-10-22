@@ -15,5 +15,5 @@ class Category < ApplicationRecord
     validates :description, presence: true
 
     #atributo anidado para crear url dentro de category
-    #accepts_nested_attributes_for :links, allow_destroy: true
+    accepts_nested_attributes_for :links, allow_destroy: true
 end

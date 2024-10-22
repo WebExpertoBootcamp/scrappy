@@ -17,12 +17,20 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
+  <body class="bg-[#F5F5F7] min-h-screen flex flex-col">
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-     <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
-      <%= yield %>
-    </main>
-  </body>
-</html>
+      <!-- Header -->
+      <%= render 'shared/header' %>
+
+      <!-- Main content (yield), ensuring full height until the footer -->
+      <main class="flex-grow">
+      <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+        <%= yield %>
+      </main>
+
+      <!-- Footer -->
+      <%= render 'shared/footer' %>
+    </body>
+
+  </html>

@@ -1,0 +1,51 @@
+<!-- _header.html.erb -->
+<header class="bg-gray-100 shadow-md"> <!-- Fondo gris aplicado al header -->
+  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <!-- Logo/Naming of the App -->
+    <div class="text-4xl font-bold flex items-center text-green-500" >
+      <a href="/" class="hover:text-blue-400">Price Scrappy</a>
+      <%= image_tag "scrappy.png", alt: "scrappy", class: "mr-2 max-h-24" %>
+
+    </div>
+
+    <!-- Navigation -->
+    <nav class="space-x-6 hidden md:flex">
+      <a href="<%= categories_path %>" class="bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300"> <!-- Fondo gris aplicado al botón -->
+          <h3>Usuarios</h3>
+      </a>
+      <a href="<%= categories_path %>" class="bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300"> <!-- Fondo gris aplicado al botón -->
+        <h3>Categorías</h3>
+      </a>
+      <a href="<%= products_path %>" class="bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300"> <!-- Fondo gris aplicado al botón -->
+        <h3>Productos</h3>
+      </a>
+    </nav>
+
+    <!-- Mobile Menu Icon -->
+    <div class="md:hidden">
+      <button id="menu-button" class="text-gray-800 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden bg-gray-100 md:hidden"> <!-- Fondo gris aplicado al menú móvil -->
+    <a href="<%= categories_path %>" class="block bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300"> <!-- Fondo gris aplicado -->
+      <h3>Categorías</h3>
+    </a>
+    <a href="<%= products_path %>" class="block bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300"> <!-- Fondo gris aplicado -->
+      <h3>Productos</h3>
+    </a>
+  </div>
+</header>
+
+<script>
+  // Toggle mobile menu
+  document.getElementById('menu-button').addEventListener('click', function() {
+    var mobileMenu = document.getElementById('mobile-menu');
+    mobileMenu.classList.toggle('hidden');
+  });
+</script>

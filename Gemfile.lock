@@ -127,6 +127,8 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.7.2)
+    jwt (2.9.3)
+      base64
     language_server-protocol (3.17.0.3)
     logger (1.6.1)
     loofah (2.22.0)
@@ -317,6 +319,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  bcrypt (~> 3.1.7)
   bootsnap
   brakeman
   database_cleaner-active_record
@@ -326,6 +329,7 @@ DEPENDENCIES
   faker
   importmap-rails
   jbuilder
+  jwt
   nokogiri
   pg (~> 1.1)
   puma (>= 5.0)

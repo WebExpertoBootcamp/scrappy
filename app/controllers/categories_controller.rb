@@ -21,6 +21,8 @@ class CategoriesController < ApplicationController
 
   # POST /categories or /categories.json
   def create
+    Rails.logger.info "Datos recibidos: #{params.inspect}"
+    Rails.logger.info "Links recibidos: #{[:links_attributes].inspect}"
     @category = Category.new(category_params)
 
     respond_to do |format|
@@ -65,6 +67,6 @@ class CategoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def category_params
-      params.require(:category).permit(:name, :description)
+      params.require(:category).permit(:name, :description, links_attributes: [:id, :url, :_destroy])
     end
 end
