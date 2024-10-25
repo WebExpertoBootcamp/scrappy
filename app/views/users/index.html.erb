@@ -5,9 +5,13 @@
 
   <% content_for :title, "Users" %>
 
+
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Users</h1>
-    <%= link_to "New user", new_user_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    <div class="flex">
+      <%= link_to "Invitar usuarios", new_user_invitation_path, class: "mx-1 rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium", style:"margin: 0px 5px" %>
+      <%= link_to "New user", new_user_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    </div>
   </div>
 
   <div id="products" class="min-w-full">

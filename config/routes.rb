@@ -6,7 +6,10 @@ Rails.application.routes.draw do
     sign_in: 'login',
     sign_out: 'logout',
     sign_up: 'register'
+  }, controllers: {
+    invitations: 'devise/invitations' # Agregas el controlador para manejar las invitaciones
   }
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get "landing/index"
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
