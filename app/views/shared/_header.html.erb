@@ -10,15 +10,21 @@
 
     <!-- Navigation -->
     <nav class="space-x-6 hidden md:flex">
-      <a href="<%= categories_path %>" class="bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300"> <!-- Fondo gris aplicado al botón -->
+
+      <% if user_signed_in? %>
+        <a href="<%= categories_path %>" class="bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300"> <!-- Fondo gris aplicado al botón -->
           <h3>Usuarios</h3>
-      </a>
-      <a href="<%= categories_path %>" class="bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300"> <!-- Fondo gris aplicado al botón -->
-        <h3>Categorías</h3>
-      </a>
-      <a href="<%= products_path %>" class="bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300"> <!-- Fondo gris aplicado al botón -->
-        <h3>Productos</h3>
-      </a>
+        </a>
+        <a href="<%= categories_path %>" class="bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300"> <!-- Fondo gris aplicado al botón -->
+          <h3>Categorías</h3>
+        </a>
+        <a href="<%= products_path %>" class="bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300"> <!-- Fondo gris aplicado al botón -->
+          <h3>Productos</h3>
+        </a>
+        <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: "bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300" %>
+      <% else %>
+        <%= link_to 'Login', new_user_session_path, class: "bg-gray-100 rounded-lg shadow-lg p-4 hover:bg-gray-200 transition duration-300" %>
+      <% end %>
     </nav>
 
     <!-- Mobile Menu Icon -->
