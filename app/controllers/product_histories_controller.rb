@@ -1,6 +1,10 @@
 class ProductHistoriesController < ApplicationController
   before_action :set_product_history, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, alert: exception.message
+  end
   # GET /product_histories or /product_histories.json
   def index
     @product_histories = ProductHistory.all

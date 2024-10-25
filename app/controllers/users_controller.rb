@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource
   before_action :set_user, only: %i[ show edit update destroy ]
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, alert: exception.message
+  end
   # GET /users or /users.json
   def index
     @users = User.all
