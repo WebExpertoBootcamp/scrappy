@@ -1,26 +1,41 @@
-<div id="<%= dom_id product %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= product.name %>
-  </p>
+<div class="w-full sm:w-1/2 lg:w-1/4 p-4">
+  <div id="<%= dom_id product %>" class="bg-white p-6 rounded-lg shadow-md border border-gray-300">
+    <%= link_to product do %>
+    <div class="grid grid-cols-1 gap-4">
+      <!-- Imagen del producto -->
+      <div>
+        <img src="<%= product.img_url %>" alt="<%= product.name %>" class="w-full h-48 object-cover rounded-md shadow-md">
+      </div>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= product.description %>
-  </p>
+      <!-- Detalles del producto -->
+      <div>
+        <p class="mb-4">
+          <strong class="block text-lg font-semibold text-gray-900">Nombre:</strong>
+          <span class="text-gray-700"><%= product.name %></span>
+        </p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Price:</strong>
-    <%= product.price %>
-  </p>
+        <p class="mb-4">
+          <strong class="block text-lg font-semibold text-gray-900">Descripción:</strong>
+          <span class="text-gray-600"><%= product.description %></span>
+        </p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Category:</strong>
-    <%= product.category_id %>
-  </p>
-<p>
-  <strong>URL:</strong>
-  <%= product.url %>
-</p>
+        <p class="mb-4">
+          <strong class="block text-lg font-semibold text-gray-900">Precio:</strong>
+          <span class="text-primary text-2xl font-bold">$<%= product.price %></span>
+        </p>
 
+        <p class="mb-4">
+          <strong class="block text-lg font-semibold text-gray-900">Categoría:</strong>
+          <span class="text-gray-700"><%= product.category.name %></span>
+        </p>
+
+        <p class="mb-4">
+          <a href="<%= product.url %>" target="_blank" rel="noopener noreferrer" class="bg-primary text-white py-3 px-6 rounded-lg hover:bg-green-900 text-lg font-semibold block text-center shadow-lg transition-all duration-300">
+            Ver en sitio
+          </a>
+        </p>
+      </div>
+    </div>
+    <%end%>
+  </div>
 </div>
