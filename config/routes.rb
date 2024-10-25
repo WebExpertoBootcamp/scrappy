@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+=begin
+  devise_for :users
+=end
+  devise_for :users, path: '', path_names: {
+    sign_in: 'login',
+    sign_out: 'logout',
+    sign_up: 'register'
+  }, controllers: {
+    invitations: 'devise/invitations' # Agregas el controlador para manejar las invitaciones
+  }
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get "landing/index"
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -12,6 +23,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  resources :users
   resources :categories
   resources :products
   resources :product_histories
