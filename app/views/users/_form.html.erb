@@ -25,6 +25,11 @@
     <%= form.label :password_confirmation %>
     <%= form.password_field :password_confirmation, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
+
+  <div class="my-5">
+    <strong class="block font-medium mb-1">Role:</strong>
+    <%= form.select :role, options_for_select([['Admin', 'Admin'], ['User', 'User']], user.role), {}, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
 <!--
   <div class="my-5">
     <%#= form.label :name %>

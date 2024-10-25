@@ -41,6 +41,7 @@ gem 'selenium-webdriver'
 gem 'jwt'
 gem 'bcrypt', '~> 3.1.7'
 gem 'devise_invitable', '~> 2.0.0'
+gem 'cancancan'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
