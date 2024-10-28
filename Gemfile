@@ -69,3 +69,6 @@ group :development do
   gem 'letter_opener_web'
 end
 
+
+gem "sidekiq", "~> 7.3"
+gem "httparty"
