@@ -9,6 +9,9 @@
 #  category_id :bigint           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  url         :string
+#  img_url     :string
+#  sku         :string
 #
 require 'rails_helper'
 

@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       post 'auth/register', to: 'api_user#register'
       post 'auth/login', to: 'api_user#login'
+      put 'auth/subscription', to: 'api_user#subscription'
+      delete 'auth/subscription', to: 'api_user#unsubscription'
     end
    end
 
