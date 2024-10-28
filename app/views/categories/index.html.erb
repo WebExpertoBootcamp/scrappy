@@ -1,21 +1,30 @@
-<div class="w-full">
+<div class="w-full max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+  <!-- Mensaje de notificación -->
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-700 font-semibold rounded-lg" id="notice"><%= notice %></p>
   <% end %>
 
   <% content_for :title, "Categories" %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Categories</h1>
-    <%= link_to "New category", new_category_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  <!-- Encabezado de la página con botón de nueva categoría -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Categories</h1>
+    <%= link_to "New Category", new_category_path, class: "py-2 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700" %>
   </div>
 
-  <div id="categories" class="min-w-full">
+  <!-- Lista de categorías -->
+  <div id="categories" class="space-y-6">
     <% @categories.each do |category| %>
-      <%= render category %>
-      <p>
-        <%= link_to "Show this category", category, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      </p>
+      <div class="p-5 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+        <h2 class="text-2xl font-semibold text-gray-800"><%= category.name %></h2>
+        <p class="mt-2 text-gray-600"><%= category.description %></p>
+        
+        <div class="mt-4 flex space-x-3">
+          <%= link_to "Show this category", category, class: "py-2 px-4 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200" %>
+          <%= link_to "Edit", edit_category_path(category), class: "py-2 px-4 bg-yellow-100 text-yellow-700 rounded-lg font-medium hover:bg-yellow-200" %>
+          <%= button_to "Delete", category, method: :delete, data: { confirm: "Are you sure?" }, class: "py-2 px-4 bg-red-100 text-red-700 rounded-lg font-medium hover:bg-red-200" %>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>

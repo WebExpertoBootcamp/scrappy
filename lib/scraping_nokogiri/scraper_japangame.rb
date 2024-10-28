@@ -59,5 +59,8 @@ class ScrapeProduct
 end
 
 # Para probar el método, carga el archivo en la consola de Rails y ejecuta el siguiente comando:
+# rails c
+# load 'lib/scraping_nokogiri/scraper_japangame.rb'
+# category = Category.last
 # category = Category.find_by(name: "Soldadores y Estaciones de trabajo") 
 # ScrapeProduct.scrape_and_save_products("https://japangameonline.com/categoria-producto/soldadura/", category)
