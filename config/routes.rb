@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
 =begin
   devise_for :users
@@ -25,6 +27,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :users
   resources :categories
+  #post 'categories/:id', to: 'categories#update'
   resources :products
   resources :product_histories
   resources :links
@@ -36,5 +39,7 @@ Rails.application.routes.draw do
       post 'auth/register', to: 'api_user#register'
       post 'auth/login', to: 'api_user#login'
     end
-  end
+   end
+
+  mount Sidekiq::Web => "/sidekiq" # mount Sidekiq::Web in your Rails app
 end
