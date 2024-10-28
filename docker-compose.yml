@@ -10,10 +10,28 @@ services:
       DATABASE_PORT: 5432
       DATABASE_HOST: db
     volumes:
-      - .:/scrappy # Monta la carpeta raiz 'scrappy' de tu sistema local en '/scrappy' dentro del contenedor
-    working_dir: /scrappy # Define el directorio de trabajo para Rails
+      - .:/scrappy
+    working_dir: /scrappy
     depends_on:
       - db
+      - redis # Asegura que Redis esté disponible antes de que inicie Rails
+
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    environment:
+      DATABASE_URL: postgres://postgres:sa123456@db:5432
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - .:/scrappy
+    depends_on:
+      - rails
+      - redis
+
+  redis:
+    image: redis:7.4
+    ports:
+      - "6379:6379"
 
   db:
     image: postgres

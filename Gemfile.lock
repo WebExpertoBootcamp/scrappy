@@ -113,6 +113,8 @@ GEM
     diff-lcs (1.5.1)
     drb (2.2.1)
     erubi (1.13.0)
+    et-orbi (1.2.11)
+      tzinfo
     factory_bot (6.5.0)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.4.3)
@@ -120,6 +122,9 @@ GEM
       railties (>= 5.0.0)
     faker (3.4.2)
       i18n (>= 1.8.11, < 2)
+    fugit (1.11.1)
+      et-orbi (~> 1, >= 1.2.11)
+      raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
     httparty (0.22.0)
@@ -194,6 +199,7 @@ GEM
     public_suffix (6.0.1)
     puma (6.4.3)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.8.1)
     rack (3.1.8)
     rack-session (2.0.0)
@@ -306,6 +312,10 @@ GEM
       logger
       rack (>= 2.2.4)
       redis-client (>= 0.22.2)
+    sidekiq-cron (1.12.0)
+      fugit (~> 1.8)
+      globalid (>= 1.0.1)
+      sidekiq (>= 6)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -377,6 +387,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers (~> 6.0)
   sidekiq (~> 7.3)
+  sidekiq-cron
   sprockets-rails
   stimulus-rails
   tailwindcss-rails

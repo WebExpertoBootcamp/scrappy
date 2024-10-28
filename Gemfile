@@ -42,6 +42,9 @@ gem 'jwt'
 gem 'bcrypt', '~> 3.1.7'
 gem 'devise_invitable', '~> 2.0.0'
 gem 'cancancan'
+gem 'sidekiq-cron'
+gem "sidekiq", "~> 7.3"
+gem "httparty"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -70,5 +73,4 @@ group :development do
 end
 
 
-gem "sidekiq", "~> 7.3"
-gem "httparty"
+

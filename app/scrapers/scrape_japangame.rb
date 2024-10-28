@@ -16,6 +16,7 @@ module ScrapeJapangame
       if products.empty?
         puts "No se encontraron productos. Verifica los selectores CSS."
       else
+        
         # Iterar sobre cada producto y extraer los datos
         products.each do |product|
           name = product.at_css('.dnwoo_product_grid_title a')&.text&.strip
