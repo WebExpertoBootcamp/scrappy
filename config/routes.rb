@@ -1,6 +1,6 @@
-require 'sidekiq/web'
-
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+  require 'sidekiq/cron/web'
 =begin
   devise_for :users
 =end

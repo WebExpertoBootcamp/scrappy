@@ -1,0 +1,4 @@
+scraping_job:
+  cron: "* * * * *" # Cada hora, en el minuto 0
+  class: "ScrapingJob"
+  queue: default
