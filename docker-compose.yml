@@ -16,20 +16,8 @@ services:
       - db
       - redis # Asegura que Redis esté disponible antes de que inicie Rails
 
-  sidekiq:
-    build: .
-    command: bundle exec sidekiq
-    environment:
-      DATABASE_URL: postgres://postgres:sa123456@db:5432
-      REDIS_URL: redis://redis:6379/0
-    volumes:
-      - .:/scrappy
-    depends_on:
-      - rails
-      - redis
-
   redis:
-    image: redis:7.4
+    image: redis:latest
     ports:
       - "6379:6379"
 
