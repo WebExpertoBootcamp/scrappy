@@ -3,58 +3,10 @@ module Api
   module V1
     class ApiUserController < ApplicationController
       protect_from_forgery with: :null_session
-      before_action :authenticate_request, only: [:subscription, :unsubscription]
+      before_action :authenticate_request, only: [:subscription, :unsubscription, :mysubscriptions]
 
-      # PUT /auth/subscription
-      def subscription
-        # Verificamos que @current_user esté asignado después de la autenticación
-        if @current_user.nil?
-          return render json: { error: "Usuario no autenticado" }, status: :unauthorized
-        end
-    
-        category_ids = params[:category_ids]
-        if category_ids.blank?
-          return render json: { error: "No se proporcionaron categorías para suscribirse" }, status: :bad_request
-        end
-    
-        categories = Category.where(id: category_ids)
-        if categories.empty?
-          return render json: { error: "Las categorías especificadas no existen" }, status: :not_found
-        end
-    
-        # Asigna las categorías al usuario actual
-        @current_user.categories = categories
-        if @current_user.save
-          render json: { message: "Suscripción actualizada con éxito", subscribed_categories: @current_user.categories }, status: :ok
-        else
-          render json: { errors: @current_user.errors.full_messages }, status: :unprocessable_entity
-        end
-      end
 
-      # DELETE /auth/subscription
-      def unsubscription
-        if @current_user.nil?
-          return render json: { error: "Usuario no encontrado" }, status: :unauthorized
-        end
-
-        category_ids = params[:category_ids]
-        if category_ids.blank?
-          return render json: { error: "No se proporcionaron categorías para desuscribirse" }, status: :bad_request
-        end
-
-        categories_to_unsubscribe = @current_user.categories.where(id: category_ids)
-        if categories_to_unsubscribe.empty?
-          return render json: { error: "Las categorías especificadas no existen o no están suscritas" }, status: :not_found
-        end
-
-        @current_user.categories.delete(categories_to_unsubscribe)
-        if @current_user.save
-          render json: { message: "Categorías eliminadas con éxito", remaining_categories: @current_user.categories }, status: :ok
-        else
-          render json: { errors: @current_user.errors.full_messages }, status: :unprocessable_entity
-        end
-      end
-
+      
       # POST /auth/register
       def register
         # Crear un usuario y devolver un token con is_admin = false y las categorías suscritas
@@ -74,14 +26,74 @@ module Api
 
       # POST /auth/login
       def login
+       
         @user = User.find_by(email: params[:email])
-        if @user&.authenticate(params[:password])
+        if @user&.valid_password?(params[:password])
           token = JsonWebToken.jwt_encode(user_id: @user.id)
           render json: { token: token, user: @user }, status: :ok
         else
           render json: { error: 'Invalid email or password' }, status: :unauthorized
         end
       end
+
+      # PUT /auth/subscription
+      def subscription
+        # Verificamos que @current_user esté asignado después de la autenticación
+        if @current_user.nil?
+          return render json: { error: "Usuario no autenticado" }, status: :unauthorized
+        end
+
+        category_ids = params[:category_ids]
+        if category_ids.blank?
+          return render json: { error: "No se proporcionaron categorías para suscribirse" }, status: :bad_request
+        end
+
+        categories = Category.where(id: category_ids)
+        if categories.empty?
+          return render json: { error: "Las categorías especificadas no existen" }, status: :not_found
+        end
+
+        # Asigna las categorías al usuario actual
+        @current_user.categories = categories
+        if @current_user.save
+          render json: { message: "Suscripción actualizada con éxito", subscribed_categories: @current_user.categories }, status: :ok
+        else
+          render json: { errors: @current_user.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
+
+    # DELETE /auth/subscription
+    def unsubscription
+      if @current_user.nil?
+        return render json: { error: "Usuario no encontrado" }, status: :unauthorized
+      end
+
+      category_ids = params[:category_ids]
+      if category_ids.blank?
+        return render json: { error: "No se proporcionaron categorías para desuscribirse" }, status: :bad_request
+      end
+
+      categories_to_unsubscribe = @current_user.categories.where(id: category_ids)
+      if categories_to_unsubscribe.empty?
+        return render json: { error: "Las categorías especificadas no existen o no están suscritas" }, status: :not_found
+      end
+
+      @current_user.categories.delete(categories_to_unsubscribe)
+      if @current_user.save
+        render json: { message: "Categorías eliminadas con éxito", remaining_categories: @current_user.categories }, status: :ok
+      else
+        render json: { errors: @current_user.errors.full_messages }, status: :unprocessable_entity
+      end
+    end
+
+ # GET /auth/mysubscriptions
+    def mysubscriptions
+      if @current_user.nil?
+        return render json: { error: "Usuario no autenticado" }, status: :unauthorized
+      end
+      render json: { message: "tus suscripciones son estas" }, status: :ok
+    end
+
 
       private
 

@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       post 'auth/login', to: 'api_user#login'
       put 'auth/subscription', to: 'api_user#subscription'
       delete 'auth/subscription', to: 'api_user#unsubscription'
+      get 'auth/mysubscriptions', to: 'api_user#mysubscriptions'
     end
    end
 
