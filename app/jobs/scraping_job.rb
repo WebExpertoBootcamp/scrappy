@@ -1,5 +1,5 @@
-class ScrapingJob < ApplicationJob
-  queue_as :default
+class ScrapingJob
+  include Sidekiq::Job
 
   def perform(*args)
     Rails.logger.info "ScrapingJob started"

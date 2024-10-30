@@ -1,4 +1,9 @@
+hello_world_job:
+  cron: "* * * * *" # Cada minuto
+  class: "HelloWorldJob"
+  queue: default
+
 scraping_job:
-  cron: "* * * * *" # Cada hora, en el minuto 0
+  cron: "*/15 * * * *" # Cada 15 minutos
   class: "ScrapingJob"
   queue: default

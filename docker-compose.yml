@@ -9,6 +9,9 @@ services:
       POSTGRES_PASSWORD: sa123456
       DATABASE_PORT: 5432
       DATABASE_HOST: db
+      REDIS_URL: redis://redis:6379/0
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     volumes:
       - .:/scrappy
     working_dir: /scrappy

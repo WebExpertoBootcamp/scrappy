@@ -1,3 +1,3 @@
 require 'redis'
-redis = Redis.new(host: "redis", port: 6379, db: 11)
+redis = Redis.new(host: ENV['REDIS_HOST'] || "localhost", port: ENV['REDIS_PORT'] || 6379)
 puts redis.ping
