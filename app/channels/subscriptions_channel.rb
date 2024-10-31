@@ -1,12 +1,11 @@
 class SubscriptionsChannel < ApplicationCable::Channel
   def subscribed
-    # stream_from "some_channel"
-    stream_from "subscriptions_channel"
+    # Crear un stream para la sala específica de categoría
+    category_id = params[:room] || "default_room"
+    stream_from "category_#{category_id}"
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
+    # Lógica de limpieza al desuscribirse (si es necesario)
   end
 end
-
-

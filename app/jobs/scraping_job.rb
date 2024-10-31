@@ -10,6 +10,10 @@ class ScrapingJob
       scraper_selector(url, category.id, scraper_type)
     end
     Rails.logger.info "ScrapingJob finished"
+    
+    price_check_job = PriceCheckJob.new
+    price_check_job.perform
+    
   end
 
   private
@@ -24,3 +28,5 @@ class ScrapingJob
     end
   end
 end
+
+

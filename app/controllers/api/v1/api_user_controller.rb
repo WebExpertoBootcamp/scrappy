@@ -5,8 +5,6 @@ module Api
       protect_from_forgery with: :null_session
       before_action :authenticate_request, only: [:subscription, :unsubscription, :mysubscriptions]
 
-
-      
       # POST /auth/register
       def register
         # Crear un usuario y devolver un token con is_admin = false y las categorías suscritas
@@ -15,7 +13,6 @@ module Api
           # Relacionar el usuario con las categorías proporcionadas
           categories = Category.where(id: params[:category_ids])
           @user.categories << categories if categories.any?
-
           # Generar el token JWT
           token = JsonWebToken.jwt_encode(user_id: @user.id)
           render json: { token: token, user: @user, subscribed_categories: categories }, status: :created
@@ -26,7 +23,6 @@ module Api
 
       # POST /auth/login
       def login
-       
         @user = User.find_by(email: params[:email])
         if @user&.valid_password?(params[:password])
           token = JsonWebToken.jwt_encode(user_id: @user.id)
@@ -91,10 +87,28 @@ module Api
       if @current_user.nil?
         return render json: { error: "Usuario no autenticado" }, status: :unauthorized
       end
-      # Enviar un mensaje inicial al cliente a través del canal WebSocket
-      SubscriptionsChannel.broadcast_to(@current_user, { message: "tus suscripciones son estas" })
 
-      render json: { message: "Conectado al canal WebSocket de suscripciones." }, status: :ok
+      @categories = @current_user.categories
+
+      ws_url = "ws://localhost:3000/cable"
+      subscription_requests = @categories.map do |category|
+        {
+          category_id: category.id,
+          request_body: {
+            command: "subscribe",
+            identifier: {
+              channel: "SubscriptionsChannel",
+              room: category.id
+            }.to_json
+          }
+        }
+      end
+
+      render json: {
+        message: "Conexión a los canales WebSocket de suscripciones del usuario.",
+        websocket_url: ws_url,
+        subscriptions: subscription_requests
+      }, status: :ok
     end
 
 
