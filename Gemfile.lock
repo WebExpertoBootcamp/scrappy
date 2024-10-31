@@ -202,6 +202,8 @@ GEM
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.1.8)
+    rack-cors (2.0.2)
+      rack (>= 2.0.0)
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
@@ -383,6 +385,7 @@ DEPENDENCIES
   nokogiri
   pg (~> 1.1)
   puma (>= 5.0)
+  rack-cors
   rails (~> 7.2.1)
   redis
   rspec-rails (~> 7.0.0)
@@ -399,4 +402,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.5.21
+   2.5.22

@@ -86,13 +86,17 @@ module Api
       end
     end
 
- # GET /auth/mysubscriptions
+    # GET /auth/mysubscriptions
     def mysubscriptions
       if @current_user.nil?
         return render json: { error: "Usuario no autenticado" }, status: :unauthorized
       end
-      render json: { message: "tus suscripciones son estas" }, status: :ok
+      # Enviar un mensaje inicial al cliente a través del canal WebSocket
+      SubscriptionsChannel.broadcast_to(@current_user, { message: "tus suscripciones son estas" })
+
+      render json: { message: "Conectado al canal WebSocket de suscripciones." }, status: :ok
     end
+
 
 
       private

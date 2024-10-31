@@ -38,5 +38,15 @@ module Scrappy
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*' # Cambia esto a tu origen específico si es posible
+        resource '*',
+          headers: :any,
+          methods: [:get, :post, :options, :put, :delete]
+      end
+    end
+    
   end
 end
