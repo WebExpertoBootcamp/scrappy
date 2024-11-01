@@ -1,8 +1,8 @@
-# hello_world_job:
-#   cron: "* * * * *" # Cada minuto
-#   class: "HelloWorldJob"
-#   queue: default
-# scraping_job:
-#   cron: "*/10 * * * *" # Cada 15 minutos
-#   class: "ScrapingJob"
-#   queue: default
+hello_world_job:
+  cron: "* * * * *" # Cada minuto
+  class: "HelloWorldJob"
+  queue: default
+scraping_job:
+  cron: "*/5 * * * *" # Cada 5 minutos
+  class: "ScrapingJob"
+  queue: default

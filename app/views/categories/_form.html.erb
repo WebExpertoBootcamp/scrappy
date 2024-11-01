@@ -23,7 +23,7 @@
 
   <!-- Link Fields -->
   <div data-controller="nested-form">
-    <button type="button" id="addParticipantButton" data-action="click->nested-form#add" class="py-2 px-4 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700">Agregar Scraper</button>
+    <button type="button" id="addParticipantButton" data-action="click->nested-form#add" class="py-2 px-4 bg-primary text-white rounded-lg font-medium hover:bg-green-700">Agregar Scraper</button>
 
     <div class="participants space-y-6 mt-6" data-nested-form-target="container">
       <%= form.fields_for :links do |g| %>
@@ -38,7 +38,7 @@
           <!-- Scraper Selector -->
           <div>
             <%= g.label :scraper, "Selecciona una opción", class: "block text-gray-700 font-semibold" %>
-            <%= g.select :scraper, options_for_select([['japangameonline', 'japangameonline'], ['compragamer', 'compragamer'], ['ebay', 'ebay']], g.object.scraper),
+            <%= g.select :scraper, options_for_select([['japangameonline', 'japangameonline'], ['compragamer', 'compragamer'], ['hardvisionlr', 'hardvisionlr']], g.object.scraper),
                          { include_blank: "Por favor selecciona una opción" },
                          { class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" } %>
           </div>
@@ -62,7 +62,7 @@
         </div>
         <div class="my-5">
           <%= g.label :scraper, "Selecciona una opción" %>
-          <%= g.select :scraper, options_for_select([['japangameonline', 'japangameonline'], ['compragamer', 'compragamer'], ['ebay', 'ebay']]),
+          <%= g.select :scraper, options_for_select([['japangameonline', 'japangameonline'], ['compragamer', 'compragamer'], ['hardvisionlr', 'hardvisionlr']]),
             { include_blank: 'Por favor selecciona una opción' },
             { class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" } %>
         </div>

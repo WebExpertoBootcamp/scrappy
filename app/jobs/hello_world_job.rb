@@ -3,7 +3,8 @@ class HelloWorldJob
 
   def perform(*args)
     puts "Hello from inside a background job!"
-    ActionCable.server.broadcast("subscriptions_channel", { message: "Hello, it's me from the other side (wedsoquet)!" })
+    # ActionCable.server.broadcast("subscriptions_channel", { message: "Hello, it's me from the other side (wedsoquet)!" })
+    ActionCable.server.broadcast("category_3", { message: "Hello, it's me from the other side (wedsoquet)!" })
   end
 end
 

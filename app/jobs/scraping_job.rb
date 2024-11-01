@@ -13,6 +13,9 @@ class ScrapingJob
     
     price_check_job = PriceCheckJob.new
     price_check_job.perform
+
+    scraper_check_job = ScraperCheckJob.new
+    scraper_check_job.perform
     
   end
 
