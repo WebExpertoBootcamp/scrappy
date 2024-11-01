@@ -23,6 +23,8 @@ class ScrapingJob
       ScrapeJapangame.scrape(url, category)
     when "compragamer"
       ScrapeCompragamer.scrape(url, category)
+    when "hardvisionlr"
+      ScrapeHardvisionlr.scrape(url, category)
     else
       Rails.logger.error "No se encontró un scraper para la categoría #{category.name}."
     end
