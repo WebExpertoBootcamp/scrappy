@@ -1,9 +1,9 @@
-<%= form_with(model: category, class: "contents") do |form| %>
+<%= form_with(model: category, class: "space-y-6 max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg") do |form| %>
+  
   <% if category.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
-
-      <ul>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-4 py-3 font-medium rounded-lg">
+      <h2 class="font-semibold text-lg"><%= pluralize(category.errors.count, "error") %> prevented this category from being saved:</h2>
+      <ul class="mt-2 pl-5 list-disc">
         <% category.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -12,49 +12,73 @@
   <% end %>
 
   <div class="my-5">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.label :name, class: "block text-gray-700 font-semibold" %>
+    <%= form.text_field :name, class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :description %>
-    <%= form.text_area :description, rows: 4, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.label :description, class: "block text-gray-700 font-semibold" %>
+    <%= form.text_area :description, rows: 4, class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" %>
   </div>
+
+  <!-- Link Fields -->
   <div data-controller="nested-form">
-    <button type="button" id="addParticipantButton" data-action="click->nested-form#add">Agregar Scraper</button>
-    <div class="participants" data-nested-form-target="container">
+    <button type="button" id="addParticipantButton" data-action="click->nested-form#add" class="py-2 px-4 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700">Agregar Scraper</button>
+
+    <div class="participants space-y-6 mt-6" data-nested-form-target="container">
       <%= form.fields_for :links do |g| %>
-        <div class="my-5">
-          <%= g.label :url %>
-          <%= g.text_field :url, rows: 4, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-        </div>
-        <div class="my-5">
-          <%= g.label :scraper, 'Selecciona una opcion' %>
-          <%= g.select :scraper, options_for_select([['japangameonline', 'japangameonline'], ['compragamer', 'compragamer'], ['ebay', 'ebay']], g.object.scraper),
-                       { include_blank: true },
-                       { class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" } %>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-inner border border-gray-200 space-y-4">
+          
+          <!-- URL Field -->
+          <div>
+            <%= g.label :url, class: "block text-gray-700 font-semibold" %>
+            <%= g.text_field :url, class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" %>
+          </div>
+
+          <!-- Scraper Selector -->
+          <div>
+            <%= g.label :scraper, "Selecciona una opción", class: "block text-gray-700 font-semibold" %>
+            <%= g.select :scraper, options_for_select([['japangameonline', 'japangameonline'], ['compragamer', 'compragamer'], ['ebay', 'ebay']], g.object.scraper),
+                         { include_blank: "Por favor selecciona una opción" },
+                         { class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" } %>
+          </div>
+
+          <!-- Activo/Inactivo Selector -->
+          <div>
+            <%= g.label :isActive, "Estado del Link", class: "block text-gray-700 font-semibold" %>
+            <%= g.select :isActive, options_for_select([['Activo', true], ['Inactivo', false]], g.object.isActive),
+                         {}, { class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" } %>
+          </div>
         </div>
       <% end %>
     </div>
 
+    <!-- Template for new link -->
     <template data-nested-form-target="template">
       <%= form.fields_for :links, category.links.build, child_index: "NEW_RECORD" do |g| %>
-        <div class="my-5">
-          <%= g.label :url %>
-          <%= g.text_field :url, rows: 4, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-inner border border-gray-200 space-y-4">
+          <div>
+            <%= g.label :url, class: "block text-gray-700 font-semibold" %>
+            <%= g.text_field :url, class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" %>
+          </div>
+          <div>
+            <%= g.label :scraper, "Selecciona una opción", class: "block text-gray-700 font-semibold" %>
+            <%= g.select :scraper, options_for_select([['japangameonline', 'japangameonline'], ['compragamer', 'compragamer'], ['ebay', 'ebay']]),
+                          { include_blank: "Por favor selecciona una opción" },
+                          { class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" } %>
+          </div>
+          <div>
+            <%= g.label :isActive, "Estado del Link", class: "block text-gray-700 font-semibold" %>
+            <%= g.select :isActive, options_for_select([['Activo', true], ['Inactivo', false]]),
+                          {}, { class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" } %>
+          </div>
         </div>
-        <div class="my-5">
-          <%= g.label :scraper, "Selecciona una opción" %>
-          <%= g.select :scraper, options_for_select([['japangameonline', 'japangameonline'], ['compragamer', 'compragamer'], ['ebay', 'ebay']]),
-            { include_blank: 'Por favor selecciona una opción' },
-            { class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" } %>
-        </div>
-
       <% end %>
     </template>
   </div>
 
-  <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  <!-- Submit Button -->
+  <div class="text-right mt-6">
+    <%= form.submit "Guardar Categoría", class: "rounded-lg py-3 px-5 bg-blue-600 text-white font-medium hover:bg-blue-700 focus:ring focus:ring-blue-200 focus:outline-none" %>
   </div>
 <% end %>

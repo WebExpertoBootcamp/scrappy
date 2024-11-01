@@ -1,17 +1,16 @@
-<div id="<%= dom_id user %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Email:</strong>
-    <%= user.email %>
+<div id="<%= dom_id user %>" class="bg-white shadow-md rounded-lg p-6 my-4">
+  <div class="flex items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#22C55E] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 13.122A7.003 7.003 0 0112 10a7.003 7.003 0 016.879 3.122M12 14a7 7 0 100-14 7 7 0 000 14zm4.318 2.64a10.003 10.003 0 01-8.636 0M12 16a10 10 0 00-10 10h20a10 10 0 00-10-10z" />
+    </svg>
+    <h2 class="font-bold text-xl text-gray-800">Usuario</h2>
+  </div>
+  <p class="my-4">
+    <strong class="block text-gray-700">Email:</strong>
+    <span class="text-gray-900"><%= user.email %></span>
   </p>
-  <!--<p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%#= user.name %>
+  <p class="my-4">
+    <strong class="block text-gray-700">Rol:</strong>
+    <span class="text-gray-900"><%= user.role %></span>
   </p>
--->
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Rol:</strong>
-    <%= user.role %>
-  </p>
-
-
 </div>

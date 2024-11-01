@@ -7,22 +7,35 @@
   <% content_for :title, "Categories" %>
 
   <!-- Encabezado de la página con botón de nueva categoría -->
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold text-gray-800">Categories</h1>
-    <%= link_to "New Category", new_category_path, class: "py-2 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700" %>
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-4xl font-bold text-gray-800">Categorías</h1>
+    <%= link_to "Nueva Categoría", new_category_path, class: "py-2 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700" %>
   </div>
 
   <!-- Lista de categorías -->
   <div id="categories" class="space-y-6">
     <% @categories.each do |category| %>
-      <div class="p-5 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+      <div class="p-6 bg-gray-50 rounded-lg shadow-md border border-gray-200">
         <h2 class="text-2xl font-semibold text-gray-800"><%= category.name %></h2>
         <p class="mt-2 text-gray-600"><%= category.description %></p>
-        
-        <div class="mt-4 flex space-x-3">
-          <%= link_to "Show this category", category, class: "py-2 px-4 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200" %>
-          <%= link_to "Edit", edit_category_path(category), class: "py-2 px-4 bg-yellow-100 text-yellow-700 rounded-lg font-medium hover:bg-yellow-200" %>
-          <%= button_to "Delete", category, method: :delete, data: { confirm: "Are you sure?" }, class: "py-2 px-4 bg-red-100 text-red-700 rounded-lg font-medium hover:bg-red-200" %>
+
+        <!-- Contador de links activos e inactivos -->
+        <div class="mt-4 grid grid-cols-2 gap-4 text-center">
+          <div class="p-3 bg-green-50 rounded-lg shadow-sm">
+            <span class="text-lg font-semibold text-green-700"><%= category.links.where(isActive: true).count %></span>
+            <p class="text-sm text-green-600">Links Activos</p>
+          </div>
+          <div class="p-3 bg-red-50 rounded-lg shadow-sm">
+            <span class="text-lg font-semibold text-red-700"><%= category.links.where(isActive: false).count %></span>
+            <p class="text-sm text-red-600">Links Inactivos</p>
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="mt-6 flex space-x-3">
+          <%= link_to "Mostrar esta categoría", category, class: "py-2 px-4 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200" %>
+          <%= link_to "Editar", edit_category_path(category), class: "py-2 px-4 bg-yellow-100 text-yellow-700 rounded-lg font-medium hover:bg-yellow-200" %>
+          <%= button_to "Eliminar", category, method: :delete, data: { confirm: "¿Estás seguro?" }, class: "py-2 px-4 bg-red-100 text-red-700 rounded-lg font-medium hover:bg-red-200" %>
         </div>
       </div>
     <% end %>

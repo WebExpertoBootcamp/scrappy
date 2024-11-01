@@ -1,12 +1,25 @@
-<div id="<%= dom_id link %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Url:</strong>
-    <%= link.url %>
-  </p>
+<div id="<%= dom_id link %>" class="p-4 border rounded-lg shadow-md mb-4 bg-white">
+  <div class="flex items-center">
+    <p class="flex-1">
+      <strong class="block font-medium text-gray-700">URL:</strong>
+      <a href="<%= link.url %>" class="text-blue-600 underline" target="_blank"><%= link.url %></a>
+    </p>
+    
+    <div class="ml-4">
+      <% if link.isActive %>
+        <span class="text-green-500" data-tooltip="Activo" title="Link Activo">
+          ✔️
+        </span>
+      <% else %>
+        <span class="text-red-500" data-tooltip="Inactivo" title="Link Inactivo">
+          ❌
+        </span>
+      <% end %>
+    </div>
+  </div>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Category:</strong>
-    <%= link.category_id %>
+  <p class="mt-2 text-sm text-gray-500">
+    <strong class="block font-medium text-gray-700">Categoría:</strong>
+    <%= link.category.name %>
   </p>
-
 </div>

@@ -1,25 +1,22 @@
 <div class="w-full">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-700 font-medium rounded-lg"><%= notice %></p>
   <% end %>
 
-  <% content_for :title, "Users" %>
-
-
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Users</h1>
-    <div class="flex">
-      <%= link_to "Invitar usuarios", new_user_invitation_path, class: "mx-1 rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium", style:"margin: 0px 5px" %>
-      <%= link_to "New user", new_user_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-4xl font-bold text-gray-800">Usuarios</h1>
+    <div class="flex space-x-3">
+      <%= link_to "Invitar Usuarios", new_user_invitation_path, class: "py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-500" %>
+      <%= link_to "Nuevo Usuario", new_user_path, class: "py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-500" %>
     </div>
   </div>
 
-  <div id="products" class="min-w-full">
+  <div id="users" class="space-y-4">
     <% @users.each do |user| %>
       <%= render user %>
-      <p>
-        <%= link_to "Show this product", user, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      </p>
+      <div class="flex items-center space-x-4">
+        <%= link_to "Ver Usuario", user, class: "text-blue-600 hover:text-blue-800" %>
+      </div>
     <% end %>
   </div>
 </div>
