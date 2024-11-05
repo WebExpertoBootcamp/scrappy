@@ -17,7 +17,7 @@ class Product < ApplicationRecord
   belongs_to :category
   has_many :product_histories
 
-  before_update :create_product_history
+  after_update :create_product_history
 
   private
 

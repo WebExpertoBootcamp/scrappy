@@ -1,0 +1,5 @@
+class AddColumnToNotifications < ActiveRecord::Migration[7.2]
+  def change
+    add_reference :notifications, :category, null: false, foreign_key: true
+  end
+end

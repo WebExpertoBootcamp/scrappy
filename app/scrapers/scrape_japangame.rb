@@ -29,8 +29,10 @@ module ScrapeJapangame
           existing_product.update(
             name: name,
             description: description,
+            url: link,
             price: price.gsub(/[^\d.]/, '').to_f, # Limpia el precio y lo convierte a float
             img_url: image_url,
+            sku: name,
             category_id: category_id
           )
 

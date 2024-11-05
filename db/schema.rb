@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_01_143743) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_05_174657) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,6 +34,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_01_143743) do
     t.string "scraper"
     t.boolean "isActive"
     t.index ["category_id"], name: "index_links_on_category_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string "status"
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_notifications_on_category_id"
+    t.index ["product_id"], name: "index_notifications_on_product_id"
   end
 
   create_table "product_histories", force: :cascade do |t|
@@ -82,6 +92,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_01_143743) do
   end
 
   add_foreign_key "links", "categories"
+  add_foreign_key "notifications", "categories"
+  add_foreign_key "notifications", "products"
   add_foreign_key "product_histories", "products"
   add_foreign_key "products", "categories"
 end
