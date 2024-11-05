@@ -18,6 +18,7 @@ class PriceCheckJob
   def notify_price_drop(product, old_price, new_price)
     # Lógica para notificar a los usuarios o registrar la baja de precio
     puts "El producto #{product.name} ha bajado de precio de #{old_price} a #{new_price}"
-    # Aquí podrías enviar una notificación a los usuarios interesados
+
+    ActionCable.server.broadcast("category_#{product.category_id}", { message: "A correr ! el producto , #{product.name} ha bajado de precio de #{old_price} a #{new_price}. Adquierelo en >> #{product.url}" })
   end
 end

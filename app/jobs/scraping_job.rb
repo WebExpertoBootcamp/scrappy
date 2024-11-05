@@ -10,26 +10,22 @@ class ScrapingJob
       scraper_selector(url, category.id, scraper_type)
     end
     Rails.logger.info "ScrapingJob finished"
-    
     price_check_job = PriceCheckJob.new
     price_check_job.perform
-
-    scraper_check_job = ScraperCheckJob.new
-    scraper_check_job.perform
     
   end
 
   private
   def scraper_selector(url, category, scraper_type)
     case scraper_type
-    when "japangameonline"
-      ScrapeJapangame.scrape(url, category)
-    when "compragamer"
-      ScrapeCompragamer.scrape(url, category)
-    when "hardvisionlr"
-      ScrapeHardvisionlr.scrape(url, category)
-    else
-      Rails.logger.error "No se encontró un scraper para la categoría #{category.name}."
+      when "japangameonline"
+        ScrapeJapangame.scrape(url, category)
+      when "compragamer"
+        ScrapeCompragamer.scrape(url, category)
+      when "hardvisionlr"
+        ScrapeHardvisionlr.scrape(url, category)
+      else
+        Rails.logger.error "No se encontró un scraper para la categoría #{category.name}."
     end
   end
 end

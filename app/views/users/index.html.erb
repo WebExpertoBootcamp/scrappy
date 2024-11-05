@@ -6,17 +6,17 @@
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-4xl font-bold text-gray-800">Usuarios</h1>
     <div class="flex space-x-3">
-      <%= link_to "Invitar Usuarios", new_user_invitation_path, class: "py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-500" %>
-      <%= link_to "Nuevo Usuario", new_user_path, class: "py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-500" %>
+      <%= link_to "Invitar Usuarios", new_user_invitation_path, class: "py-2 px-4 bg-primary text-white rounded-lg hover:bg-blue-500" %>
+      <%= link_to "Nuevo Usuario", new_user_path, class: "py-2 px-4 bg-primary text-white rounded-lg hover:bg-blue-500" %>
     </div>
   </div>
 
-  <div id="users" class="space-y-4">
+  <!-- Grid adaptable -->
+  <div id="users" class="grid gap-6 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
     <% @users.each do |user| %>
-      <%= render user %>
-      <div class="flex items-center space-x-4">
-        <%= link_to "Ver Usuario", user, class: "text-blue-600 hover:text-blue-800" %>
-      </div>
+      <%= link_to user_path(user), class: "block bg-white shadow-md rounded-lg p-6 my-4 hover:bg-gray-100" do %>
+        <%= render user %>
+      <% end %>
     <% end %>
   </div>
 </div>
