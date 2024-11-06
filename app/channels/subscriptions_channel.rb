@@ -1,8 +1,8 @@
 class SubscriptionsChannel < ApplicationCable::Channel
   def subscribed
     # Crear un stream para la sala específica de categoría
-    category_id = params[:room] || "default_room"
-    stream_from "category_#{category_id}"
+    Rails.logger.info "Subscribed with category_id=#{connection.category_id}"
+    stream_from "category_#{connection.category_id}"
   end
 
   def unsubscribed

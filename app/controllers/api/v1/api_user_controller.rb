@@ -94,11 +94,11 @@ module Api
       subscription_requests = @categories.map do |category|
         {
           category_id: category.id,
+          url: "#{ws_url}?category_id=#{category.id}",
           request_body: {
             command: "subscribe",
             identifier: {
-              channel: "SubscriptionsChannel",
-              room: category.id
+              channel: "SubscriptionsChannel"
             }.to_json
           }
         }
@@ -106,7 +106,6 @@ module Api
 
       render json: {
         message: "Conexión a los canales WebSocket de suscripciones del usuario.",
-        websocket_url: ws_url,
         subscriptions: subscription_requests
       }, status: :ok
     end
