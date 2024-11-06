@@ -6,7 +6,7 @@ scraping_job:
   cron: "*/2 * * * *" # Cada 5 minutos
   class: "ScrapingJob"
   queue: default
-# price_check_job:
-#   cron: "* * * * *" # Cada 5 minutos
-#   class: "PriceCheckJob"
-#   queue: default
+send_notifications_job:
+  cron: "* * * * *" # Cada 1 minutos
+  class: "SendNotificationsJob"
+  queue: default

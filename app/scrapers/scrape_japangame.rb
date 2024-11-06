@@ -10,11 +10,11 @@ module ScrapeJapangame
 
       # Extraer la ruta de los productos y sus detalles
       products = doc.css('.products .product')
-      puts "Se encontraron #{products.count} productos."
+      #puts "Se encontraron #{products.count} productos."
 
       # Verificar si se encontraron productos
       if products.empty?
-        puts "No se encontraron productos. Verifica los selectores CSS."
+        #puts "No se encontraron productos. Verifica los selectores CSS."
       else
         
         # Iterar sobre cada producto y extraer los datos
@@ -37,16 +37,16 @@ module ScrapeJapangame
           )
 
           # Mostrar la información extraída para cada producto
-          puts "Nombre: #{name}"
-          puts "Precio: #{price}"
-          puts "Enlace: #{link}"
-          puts "Imagen: #{image_url}"
-          puts "Descripción: #{description}"
-          puts "-" * 30 # Separador para legibilidad
+          #puts "Nombre: #{name}"
+          #puts "Precio: #{price}"
+          #puts "Enlace: #{link}"
+          #puts "Imagen: #{image_url}"
+          #puts "Descripción: #{description}"
+          #puts "-" * 30 # Separador para legibilidad
         end
       end
     rescue StandardError => e
-      puts "Error al scrapeando o guardando el producto: #{e.message}"
+      #puts "Error al scrapeando o guardando el producto: #{e.message}"
     end
   end
 end

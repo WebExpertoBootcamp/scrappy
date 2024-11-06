@@ -9,7 +9,7 @@ module ScrapeHardvisionlr
       doc = Nokogiri::HTML(html)
       # Extraer la ruta de los productos y sus detalles
       products = doc.css('div.col-md-3')
-      puts products.count
+      #puts products.count
       products.each do |product|
         name = product['data-nombre']
         link = product.at_css('div.view.overlay.px-20.imagen > a')&.[]('href')
@@ -20,7 +20,7 @@ module ScrapeHardvisionlr
         sku = product.at_css('div.card-body.px-3.pb-0.pt-0 > h6 > span')&.text&.strip
 
         if name && price && link && sku
-          puts "Nombre: #{name}, Precio: #{price.gsub(/[^\d.]/, '').to_f}, Link: #{link}, Descripcion #{description} , SKU: #{sku}, Imagen: #{image_url}"
+          #puts "Nombre: #{name}, Precio: #{price.gsub(/[^\d.]/, '').to_f}, Link: #{link}, Descripcion #{description} , SKU: #{sku}, Imagen: #{image_url}"
           existing_product = Product.find_or_initialize_by(sku: sku)
           existing_product.update(
             name: name,
@@ -32,12 +32,12 @@ module ScrapeHardvisionlr
             sku: sku
           )
         else
-          puts "Producto con datos incompletos encontrado."
+          #puts "Producto con datos incompletos encontrado."
         end
       end
       nil
     rescue StandardError => e
-      puts "Error al scrapeando o guardando el producto: #{e}"
+      #puts "Error al scrapeando o guardando el producto: #{e}"
     end
   end
 end
