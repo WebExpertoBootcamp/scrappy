@@ -12,4 +12,6 @@
 class Link < ApplicationRecord
   belongs_to :category
   validates :url, presence: true
+
+  validates :url, presence: true, format: { with: URI::regexp(%w[http https]), message: "must be a valid URL" }
 end

@@ -12,5 +12,22 @@
 require 'rails_helper'
 
 RSpec.describe Link, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:category) { create(:category, name: 'Electronics') }
+  let(:link) { create(:link, url: 'http://example.com', category: category, scraper: 'default', isActive: true) }
+
+  describe 'validations' do
+    it 'is valid with valid attributes' do
+      expect(link).to be_valid
+    end
+
+    it 'is not valid without a url' do
+      link.url = nil
+      expect(link).not_to be_valid
+    end
+
+    it 'is not valid without a category' do
+      link.category = nil
+      expect(link).not_to be_valid
+    end
+  end
 end
