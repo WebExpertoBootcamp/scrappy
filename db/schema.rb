@@ -37,7 +37,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_174657) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.string "status"
+    t.integer "status", default: 0, null: false
     t.bigint "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
