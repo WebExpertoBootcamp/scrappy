@@ -18,11 +18,28 @@ RSpec.describe "/products", type: :request do
   # Product. As you add validations to Product, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    category = create(:category)
+    {
+      name: "Sample Product",
+      description: "This is a sample product description.",
+      price: 19.99,
+      category_id: Category.first.id,
+      url: "http://example.com/product",
+      img_url: "http://example.com/product.jpg",
+      sku: "SAMPLE123"
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      name: nil,
+      description: nil,
+      price: nil,
+      category_id: nil,
+      url: nil,
+      img_url: nil,
+      sku: nil
+    }
   }
 
   describe "GET /index" do
@@ -87,14 +104,28 @@ RSpec.describe "/products", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          name: "Nuevo producto",
+          description: "Ejemplo de producto.",
+          price: 19.99,
+          category_id: Category.first.id,
+          url: "http://example2.com/product",
+          img_url: "http://example2.com/product.jpg",
+          sku: "TEST1234"
+        }
       }
 
       it "updates the requested product" do
         product = Product.create! valid_attributes
         patch product_url(product), params: { product: new_attributes }
         product.reload
-        skip("Add assertions for updated state")
+        expect(product.name).to eq(new_attributes[:name])
+        expect(product.description).to eq(new_attributes[:description])
+        expect(product.price).to eq(new_attributes[:price])
+        expect(product.category_id).to eq(new_attributes[:category_id])
+        expect(product.url).to eq(new_attributes[:url])
+        expect(product.img_url).to eq(new_attributes[:img_url])
+        expect(product.sku).to eq(new_attributes[:sku])
       end
 
       it "redirects to the product" do

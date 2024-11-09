@@ -18,11 +18,19 @@ RSpec.describe "/product_histories", type: :request do
   # ProductHistory. As you add validations to ProductHistory, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    category = create(:category)
+    product = create(:product, category: category)
+    {
+      price: 100.0,
+      product_id: Product.first.id
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      price: nil,
+      product_id: nil
+    }
   }
 
   describe "GET /index" do
@@ -87,14 +95,18 @@ RSpec.describe "/product_histories", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          price: 150.0,
+          product_id: Product.first.id,
+        }
       }
 
       it "updates the requested product_history" do
         product_history = ProductHistory.create! valid_attributes
         patch product_history_url(product_history), params: { product_history: new_attributes }
         product_history.reload
-        skip("Add assertions for updated state")
+        expect(product_history.price).to eq(new_attributes[:price])
+        expect(product_history.product_id).to eq(new_attributes[:product_id])
       end
 
       it "redirects to the product_history" do
