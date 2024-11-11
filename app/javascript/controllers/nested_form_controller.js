@@ -1,17 +1,8 @@
-import { Controller } from "@hotwired/stimulus"
+import NestedForm from "stimulus-rails-nested-form";
 
-export default class extends Controller {
-    static targets = ["template", "container"]
-
-    add(event) {
-        event.preventDefault()
-        /* const content = this.templateTarget.innerHTML.replace(/NEW_RECORD/g, new Date().getTime()) */
-        const content = this.templateTarget.innerHTML.replace(
-            /NEW_RECORD/g,
-            ""
-        );
-        this.containerTarget.insertAdjacentHTML("beforeend", content)
-    }
-
-
+export default class extends NestedForm {
+  connect() {
+    super.connect();
+    console.log("Do what you want here.");
+  }
 }

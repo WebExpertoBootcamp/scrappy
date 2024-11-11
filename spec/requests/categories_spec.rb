@@ -17,12 +17,13 @@ RSpec.describe "/categories", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Category. As you add validations to Category, be sure to
   # adjust the attributes here as well.
+
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+     { name: 'Electronics', description: 'Devices and gadgets' }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { name: nil, description: nil }
   }
 
   describe "GET /index" do
@@ -89,14 +90,15 @@ RSpec.describe "/categories", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { name: 'Tecnologias', description: 'Dispositivos tecnologicos' }
       }
 
       it "updates the requested category" do
         category = Category.create! valid_attributes
         patch category_url(category), params: { category: new_attributes }
         category.reload
-        skip("Add assertions for updated state")
+        expect(category.name).to eq(new_attributes[:name])
+        expect(category.description).to eq(new_attributes[:description])
       end
 
       it "redirects to the category" do

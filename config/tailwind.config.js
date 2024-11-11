@@ -15,6 +15,15 @@ module.exports = {
       colors: {
         primary: '#14532D', // Agrega el color primario
       },
+      keyframes: {
+        borderAnimation: {
+          '0%, 100%': { borderColor: 'transparent' },
+          '50%': { borderColor: 'red' },
+        },
+      },
+      animation: {
+        borderAnimation: 'borderAnimation 1s infinite alternate',
+      },
     },
   },
   plugins: [

@@ -18,11 +18,18 @@ RSpec.describe "/links", type: :request do
   # Link. As you add validations to Link, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    category = create(:category)
+    {
+      url: "https://example.com",
+      category_id: Category.first.id
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      url: "invalid_url",
+      category_id: nil
+    }
   }
 
   describe "GET /index" do
@@ -87,14 +94,16 @@ RSpec.describe "/links", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          url: "https://example2.com"
+        }
       }
 
       it "updates the requested link" do
         link = Link.create! valid_attributes
         patch link_url(link), params: { link: new_attributes }
         link.reload
-        skip("Add assertions for updated state")
+        expect(link.url).to eq(new_attributes[:url])
       end
 
       it "redirects to the link" do

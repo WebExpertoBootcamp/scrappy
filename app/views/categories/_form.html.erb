@@ -1,5 +1,5 @@
-<%= form_with(model: category, class: "space-y-6 max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg") do |form| %>
-  
+<%= form_with(model: category, class: "space-y-6 max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg", data: { controller: "nested-form", nested_form_wrapper_selector_value: '.nested-form-wrapper' }) do |form| %>
+
   <% if category.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-4 py-3 font-medium rounded-lg">
       <h2 class="font-semibold text-lg"><%= pluralize(category.errors.count, "error") %> prevented this category from being saved:</h2>
@@ -21,54 +21,56 @@
     <%= form.text_area :description, rows: 4, class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" %>
   </div>
 
-  <!-- Link Fields -->
-  <div data-controller="nested-form">
-    <button type="button" id="addParticipantButton" data-action="click->nested-form#add" class="py-2 px-4 bg-primary text-white rounded-lg font-medium hover:bg-green-700">Agregar Scraper</button>
+  <button type="button" data-action="click->nested-form#add" class="py-2 px-4 bg-primary text-white rounded-lg font-medium hover:bg-green-700">Agregar Scraper</button>
 
-    <div class="participants space-y-6 mt-6" data-nested-form-target="container">
-      <%= form.fields_for :links do |g| %>
-        <div class="bg-gray-50 p-4 rounded-lg shadow-inner border border-gray-200 space-y-4">
-          
-          <!-- URL Field -->
-          <div>
-            <%= g.label :url, class: "block text-gray-700 font-semibold" %>
-            <%= g.text_field :url, class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" %>
-          </div>
+  <div class="space-y-6 mt-6" data-nested-form-target="target">
+    <%= form.fields_for :links do |g| %>
+      <div class="bg-gray-50 p-4 rounded-lg shadow-inner border border-gray-200 space-y-4 nested-form-wrapper">
 
-          <!-- Scraper Selector -->
-          <div>
-            <%= g.label :scraper, "Selecciona una opción", class: "block text-gray-700 font-semibold" %>
-            <%= g.select :scraper, options_for_select([['japangameonline', 'japangameonline'], ['compragamer', 'compragamer'], ['hardvisionlr', 'hardvisionlr']], g.object.scraper),
-                         { include_blank: "Por favor selecciona una opción" },
-                         { class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" } %>
-          </div>
-
-          <!-- Activo/Inactivo Selector -->
-          <div>
-            <%= g.label :isActive, "Estado del Link", class: "block text-gray-700 font-semibold" %>
-            <%= g.select :isActive, options_for_select([['Activo', true], ['Inactivo', false]], g.object.isActive),
-                         {}, { class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" } %>
-          </div>
+        <!-- URL Field -->
+        <div>
+          <%= g.label :url, class: "block text-gray-700 font-semibold" %>
+          <%= g.text_field :url, class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" %>
         </div>
-      <% end %>
-    </div>
 
-    <!-- Template for new link -->
-    <template data-nested-form-target="template">
-      <%= form.fields_for :links, category.links.build, child_index: "NEW_RECORD" do |g| %>
-        <div class="my-5">
-          <%= g.label :url %>
-          <%= g.text_field :url, rows: 4, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+        <!-- Scraper Selector -->
+        <div>
+          <%= g.label :scraper, "Selecciona una opción", class: "block text-gray-700 font-semibold" %>
+          <%= g.select :scraper, options_for_select([['japangameonline', 'japangameonline'], ['compragamer', 'compragamer'], ['hardvisionlr', 'hardvisionlr']], g.object.scraper),
+                       { include_blank: "Por favor selecciona una opción" },
+                       { class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" } %>
         </div>
-        <div class="my-5">
-          <%= g.label :scraper, "Selecciona una opción" %>
-          <%= g.select :scraper, options_for_select([['japangameonline', 'japangameonline'], ['compragamer', 'compragamer'], ['hardvisionlr', 'hardvisionlr']]),
-            { include_blank: 'Por favor selecciona una opción' },
-            { class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" } %>
+
+        <!-- Activo/Inactivo Selector -->
+        <div>
+          <%= g.label :isActive, "Estado del Link", class: "block text-gray-700 font-semibold" %>
+          <%= g.select :isActive, options_for_select([['Activo', true], ['Inactivo', false]], g.object.isActive),
+                       {}, { class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" } %>
         </div>
-      <% end %>
-    </template>
+      </div>
+    <% end %>
   </div>
+
+  <!-- Link Fields -->
+  <template data-nested-form-target="template">
+    <%= form.fields_for :links, category.links.build, child_index: "NEW_RECORD" do |g| %>
+      <div class="my-5">
+        <%= g.label :url %>
+        <%= g.text_field :url, rows: 4, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+      </div>
+      <div class="my-5">
+        <%= g.label :scraper, "Selecciona una opción" %>
+        <%= g.select :scraper, options_for_select([['japangameonline', 'japangameonline'], ['compragamer', 'compragamer'], ['hardvisionlr', 'hardvisionlr']]),
+          { include_blank: 'Por favor selecciona una opción' },
+          { class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" } %>
+      </div>
+      <div class="">
+          <%= g.label :isActive, "Estado del Link", class: "block text-gray-700 font-semibold" %>
+          <%= g.select :isActive, options_for_select([['Activo', true], ['Inactivo', false]], g.object.isActive),
+                       {}, { class: "block shadow rounded-md border border-gray-300 px-4 py-2 mt-1 w-full focus:ring focus:ring-blue-200 focus:outline-none" } %>
+        </div>
+    <% end %>
+  </template>
 
   <!-- Submit Button -->
   <div class="text-right mt-6">
