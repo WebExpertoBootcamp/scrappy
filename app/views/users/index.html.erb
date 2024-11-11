@@ -7,8 +7,21 @@
     <h1 class="text-4xl font-bold text-gray-800">Usuarios</h1>
     <div class="flex space-x-3">
       <%= link_to "Invitar Usuarios", new_user_invitation_path, class: "py-2 px-4 bg-primary text-white rounded-lg hover:bg-blue-500" %>
+      <!--
       <%= link_to "Nuevo Usuario", new_user_path, class: "py-2 px-4 bg-primary text-white rounded-lg hover:bg-blue-500" %>
+       -->
     </div>
+  </div>
+
+  <!-- Filtro por tipo de usuario -->
+  <div class="mb-6">
+    <%= form_with url: users_path, method: :get, local: true do %>
+      <div class="flex items-center space-x-4">
+        <%= label_tag :role, "Filtrar por tipo de usuario:" %>
+        <%= select_tag :role, options_for_select(User::ROLES, params[:role]), include_blank: "Todos", class: "py-2 px-4 border rounded-lg" %>
+        <%= submit_tag "Filtrar", class: "py-2 px-4 bg-primary text-white rounded-lg hover:bg-blue-500" %>
+      </div>
+    <% end %>
   </div>
 
   <!-- Grid adaptable -->
