@@ -42,10 +42,12 @@ RSpec.describe "/categories", type: :request do
   end
 
   describe "GET /new" do
-    it "renders a successful response" do
+    it "Error de autenticacion" do
       get new_category_url
       expect(response).to be_successful
+      #expect(response).to redirect_to(root_path)
     end
+    
   end
 
   describe "GET /edit" do

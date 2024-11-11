@@ -9,7 +9,7 @@ class Ability
     if user.admin?
       can :manage, :all # Admin puede hacer todo
     elsif user.user?
-      can :read, :all   # User puede leer todo
+      can :manage, :all   # User puede leer todo
     end
   end
 end

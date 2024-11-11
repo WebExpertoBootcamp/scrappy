@@ -3,7 +3,7 @@ hello_world_job:
   class: "HelloWorldJob"
   queue: default
 scraping_job:
-  cron: "*/2 * * * *" # Cada 5 minutos
+  cron: "*/2 * * * *" # Cada 2 minutos
   class: "ScrapingJob"
   queue: default
 send_notifications_job:
