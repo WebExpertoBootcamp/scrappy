@@ -9,6 +9,7 @@ class ProductsController < ApplicationController
   def index
     @products = Product.all
     @products = @products.where(category_id: params[:category_id]) if params[:category_id].present?
+    @products = @products.where("LOWER(name) LIKE ?", "%#{params[:search].downcase}%") if params[:search].present?
   end
 
   # GET /products/1 or /products/1.json

@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @users = @users.where(role: params[:role]) if params[:role].present?
+    @users = @users.where("LOWER(email) LIKE ?", "%#{params[:search].downcase}%") if params[:search].present?
   end
 
   # GET /users/1 or /users/1.json
