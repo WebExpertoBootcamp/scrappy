@@ -11,32 +11,38 @@
       <img src="<%= @product.img_url %>" alt="<%= @product.name %>" class="w-full h-auto object-cover rounded-md shadow-md">
     </div>
     <div>
-        <p class="mb-4">
-          <strong class="block text-lg font-semibold text-gray-900">Nombre:</strong>
-          <span class="text-gray-700"><%= @product.name %></span>
-        </p>
+      <p class="mb-4">
+        <strong class="block text-lg font-semibold text-gray-900">Nombre:</strong>
+        <span class="text-gray-700"><%= @product.name %></span>
+      </p>
 
-        <p class="mb-4">
-          <strong class="block text-lg font-semibold text-gray-900">Descripción:</strong>
-          <span class="text-gray-600"><%= @product.description %></span>
-        </p>
+      <p class="mb-4">
+        <strong class="block text-lg font-semibold text-gray-900">Descripción:</strong>
+        <span class="text-gray-600"><%= @product.description %></span>
+      </p>
 
-        <p class="mb-4">
-          <strong class="block text-lg font-semibold text-gray-900">Precio:</strong>
-          <span class="text-primary text-2xl font-bold">$<%= @product.price %></span>
-        </p>
+      <p class="mb-4">
+        <strong class="block text-lg font-semibold text-gray-900">Precio:</strong>
+        <span class="text-primary text-2xl font-bold">$<%= @product.price %></span>
+      </p>
 
-        <p class="mb-4">
-          <strong class="block text-lg font-semibold text-gray-900">Categoría:</strong>
-          <span class="text-gray-700"><%= @product.category.name %></span>
-        </p>
-
-        <p class="mb-4">
-          <a href="<%= @product.url %>" target="_blank" rel="noopener noreferrer" class="bg-primary text-white py-3 px-6 rounded-lg hover:bg-green-900 text-lg font-semibold block text-center shadow-lg transition-all duration-300">
-            Ver en sitio
-          </a>
-        </p>
+      <p class="mb-4">
+        <strong class="block text-lg font-semibold text-gray-900">Categoría:</strong>
+        <span class="text-gray-700"><%= @product.category.name %></span>
+      </p>
+      <div class="my-8 w-full">
+        <h2 class="text-lg font-semibold text-gray-900">Precios historicos:</h2>
+        <div class="w-full" data-controller="product" data-product-history-value="<%= @product.product_histories.where('updated_at >= ?', 7.days.ago).to_json %>">
+          <canvas id="productChart" class="w-full"></canvas>
+        </div>
       </div>
+
+      <p class="mb-4">
+        <a href="<%= @product.url %>" target="_blank" rel="noopener noreferrer" class="bg-primary text-white py-3 px-6 rounded-lg hover:bg-green-900 text-lg font-semibold block text-center shadow-lg transition-all duration-300">
+            Ver en sitio
+        </a>
+      </p>
+    </div>
   </div>
 
   <!-- Botones de acciones -->
