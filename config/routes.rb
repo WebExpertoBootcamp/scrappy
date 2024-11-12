@@ -36,6 +36,7 @@ Rails.application.routes.draw do
       put 'auth/subscription', to: 'api_user#subscription'
       delete 'auth/subscription', to: 'api_user#unsubscription'
       get 'auth/mysubscriptions', to: 'api_user#mysubscriptions'
+      get 'auth/list_categories', to: 'api_user#list_categories'
     end
    end
 end

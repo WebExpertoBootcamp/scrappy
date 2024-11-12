@@ -22,7 +22,7 @@ module ScrapeHardvisionlr
         if name && price && link && sku
           #puts "Nombre: #{name}, Precio: #{price.gsub(/[^\d.]/, '').to_f}, Link: #{link}, Descripcion #{description} , SKU: #{sku}, Imagen: #{image_url}"
           existing_product = Product.find_or_initialize_by(sku: sku)
-          if existing_product.new_record? || existing_product.price != price.gsub(/[^\d.]/, '').to_f
+          if existing_product.new_record? || existing_product.price != price.gsub(/[^\d.]/, '').to_f || existing_product.updated_at < Date.today
             existing_product.update(
               name: name,
               url: link,
@@ -34,12 +34,12 @@ module ScrapeHardvisionlr
             )
           end
         else
-          #puts "Producto con datos incompletos encontrado."
+          puts "Producto con datos incompletos encontrado."
         end
       end
       nil
     rescue StandardError => e
-      #puts "Error al scrapeando o guardando el producto: #{e}"
+      puts "Error al scrapeando o guardando el producto: #{e}"
     end
   end
 end

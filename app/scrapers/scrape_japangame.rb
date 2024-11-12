@@ -14,9 +14,8 @@ module ScrapeJapangame
 
       # Verificar si se encontraron productos
       if products.empty?
-        #puts "No se encontraron productos. Verifica los selectores CSS."
+        puts "No se encontraron productos. Verifica los selectores CSS."
       else
-        
         # Iterar sobre cada producto y extraer los datos
         products.each do |product|
           name = product.at_css('.dnwoo_product_grid_title a')&.text&.strip
@@ -26,7 +25,7 @@ module ScrapeJapangame
           image_url = product.at_css('.dnwoo_product_img img')['src']
 
           existing_product = Product.find_or_initialize_by(name: name)
-          if existing_product.new_record? || existing_product.price != price.gsub(/[^\d.]/, '').to_f
+          if existing_product.new_record? || existing_product.price != price.gsub(/[^\d.]/, '').to_f || existing_product.updated_at < Date.today
             existing_product.update(
               name: name,
               url: link,
@@ -48,7 +47,7 @@ module ScrapeJapangame
         end
       end
     rescue StandardError => e
-      #puts "Error al scrapeando o guardando el producto: #{e.message}"
+      puts "Error al scrapeando o guardando el producto: #{e.message}"
     end
   end
 end

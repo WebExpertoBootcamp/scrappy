@@ -3,7 +3,7 @@ module Api
   module V1
     class ApiUserController < ApplicationController
       protect_from_forgery with: :null_session
-      before_action :authenticate_request, only: [:subscription, :unsubscription, :mysubscriptions]
+      before_action :authenticate_request, only: [:subscription, :unsubscription, :mysubscriptions, :list_categories]
 
       # POST /auth/register
       def register
@@ -94,6 +94,7 @@ module Api
       subscription_requests = @categories.map do |category|
         {
           category_id: category.id,
+          category: category,
           url: "#{ws_url}?category_id=#{category.id}",
           request_body: {
             command: "subscribe",
@@ -103,16 +104,18 @@ module Api
           }
         }
       end
-
       render json: {
         message: "Conexión a los canales WebSocket de suscripciones del usuario.",
         subscriptions: subscription_requests
       }, status: :ok
     end
+    # GET /auth/get_categories
+    def list_categories
+      @categories = Category.all
+      render json: @categories
+    end
 
-
-
-      private
+    private
 
       def user_params
         params.permit(:email, :password, :password_confirmation)
