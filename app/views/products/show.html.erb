@@ -32,7 +32,7 @@
       </p>
       <div class="my-8 w-full">
         <h2 class="text-lg font-semibold text-gray-900">Precios historicos:</h2>
-        <div class="w-full" data-controller="product" data-product-history-value="<%= @product.product_histories.where('updated_at >= ?', 7.days.ago).to_json %>">
+        <div class="w-full" data-controller="product" data-product-history-value="<%= @product.product_histories.where('updated_at >= ?', 30.days.ago).to_json %>">
           <canvas id="productChart" class="w-full"></canvas>
         </div>
       </div>

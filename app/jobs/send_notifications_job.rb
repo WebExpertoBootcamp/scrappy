@@ -14,15 +14,25 @@ class SendNotificationsJob
   private
 
   def notify(notification)
+    
     # Lógica para enviar la notificación mediante WebSocket
-    puts "------->>>> -----------La notificación #{notification.id} se enviará por el canal con room #{notification.category_id} "
+    lower_price = ProductHistory.where(product_id: notification.product_id)
+                                         .where('created_at >= ?', 1.month.ago)
+                                         .minimum(:price)
 
+    higher_price = ProductHistory.where(product_id: notification.product_id)
+                                          .where('created_at >= ?', 1.month.ago)
+                                          .maximum(:price)
+    periodo = 'mensual'
     # Envío de la notificación y manejo de respuesta de clientes
     result = ActionCable.server.broadcast("category_#{notification.category_id}", {
       message: notification.message,
-      product: notification.product
+      product: notification.product,
+      lower_price: lower_price,
+      higher_price: higher_price,
+      periodo: periodo
     })
-
+      puts "Enviando notificación #{notification.id}... #{result}"
     # Si no hay clientes escuchando, marcar como no recibida
     if result.zero?
       notification.update(status: :not_received)
