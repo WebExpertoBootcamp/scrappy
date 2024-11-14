@@ -87,26 +87,9 @@ module Api
       if @current_user.nil?
         return render json: { error: "Usuario no autenticado" }, status: :unauthorized
       end
-
-      @categories = @current_user.categories
-
-      ws_url = "ws://localhost:3000/cable"
-      subscription_requests = @categories.map do |category|
-        {
-          category_id: category.id,
-          category: category,
-          url: "#{ws_url}?category_id=#{category.id}",
-          request_body: {
-            command: "subscribe",
-            identifier: {
-              channel: "SubscriptionsChannel"
-            }.to_json
-          }
-        }
-      end
       render json: {
         message: "Conexión a los canales WebSocket de suscripciones del usuario.",
-        subscriptions: subscription_requests
+        subscriptions: ActiveModelSerializers::SerializableResource.new(@current_user.categories, each_serializer: SubscriptionSerializer)
       }, status: :ok
     end
     # GET /auth/get_categories
