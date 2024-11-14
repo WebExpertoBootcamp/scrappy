@@ -340,8 +340,8 @@
       <value>file://$MODULE_DIR$/../scrappy\vendor/assets</value>
     </entry>
   </component>
-  <component name="RakeTasksCache-v2" failedReloadsCounter="1">
-    <option name="failedReloadsCounter" value="1" />
+  <component name="RakeTasksCache-v2" failedReloadsCounter="2">
+    <option name="failedReloadsCounter" value="2" />
     <option name="myRootTask">
       <RakeTaskImpl id="rake">
         <subtasks>

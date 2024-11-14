@@ -3,6 +3,37 @@
 ## **Overview** 
 Esta aplicación web, desarrollada con Ruby on Rails 7, permite a los usuarios suscribirse a notificaciones en tiempo real sobre oportunidades de compra (descuentos o rebajas) en productos o servicios de su interés.
 
+## **Instalacion** 
+### Requisitos
+- Docker
+- Git
+
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/WebExpertoBootcamp/scrappy.git
+cd scrappy
+```
+### 2. Construir y levantar contenedores de Docker
+```bash
+docker-compose up --build
+```
+Nota: la bandera `--build` es solo necesaria la primera vez que se ejecuta el comando.
+
+### 3. Ejecutar el seed para crear datos de usuarios
+```bash
+docker ps
+docker exec -it scrappy-rails-1 bash
+rails db:seed
+```
+
+### 4. Acceder a la aplicación
+- La aplicación estará disponible en `http://localhost:3000`
+
+### 5. Detener los contenedores
+Para detener los contenedores de Docker, ejecutar el siguiente comando:
+```bash
+docker-compose down
+```
 
 ## Equipo Desarrollador
 
