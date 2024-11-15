@@ -1,0 +1,29 @@
+<%= form_with(model: user, class: "bg-white shadow-md rounded-lg p-6") do |form| %>
+  <% if user.errors.any? %>
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded-md">
+      <h3><%= pluralize(user.errors.count, "error") %> impiden guardar este usuario:</h3>
+      <ul class="mt-2 list-disc pl-6">
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-5">
+    <%= form.label :email, "Correo Electrónico", class: "block text-gray-700 font-semibold" %>
+    <%= form.text_field :email, class: "w-full px-4 py-2 mt-2 border rounded-lg focus:ring focus:ring-green-200" %>
+  </div>
+
+
+
+  <div class="mb-5">
+    <%= form.label :role, "Rol", class: "block text-gray-700 font-semibold" %>
+    <%= form.select :role, options_for_select([['Admin', 'Admin'], ['Usuario', 'User']], user.role),
+                    {}, class: "w-full px-4 py-2 mt-2 border rounded-lg focus:ring focus:ring-green-200" %>
+  </div>
+
+  <div class="mt-6">
+    <%= form.submit "Guardar", class: "w-full bg-green-600 text-white font-semibold py-3 rounded-lg hover:bg-green-500" %>
+  </div>
+<% end %>

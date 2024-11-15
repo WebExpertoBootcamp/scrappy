@@ -11,5 +11,22 @@
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:category) { create(:category, name: 'Electronics', description: 'Devices and gadgets') }
+
+  describe 'validations' do
+    it 'is valid with valid attributes' do
+      expect(category).to be_valid
+    end
+
+    it 'is not valid without a name' do
+      category.name = nil
+      expect(category).not_to be_valid
+    end
+
+    it 'is not valid without a description' do
+      category.description = nil
+      expect(category).not_to be_valid
+    end
+
+  end
 end

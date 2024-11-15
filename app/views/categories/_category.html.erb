@@ -1,12 +1,22 @@
-<div id="<%= dom_id category %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= category.name %>
-  </p>
+<div id="<%= dom_id category %>" class="p-6 bg-gray-100 border rounded-lg shadow-md mb-6">
+  <h2 class="font-bold text-xl text-primary"><%= category.name %></h2>
+  <p class="text-gray-700 mb-4"><%= category.description %></p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= category.description %>
-  </p>
-
+  <% if category.links.any? %>
+    <div class="bg-white p-4 rounded-lg shadow-sm">
+      <h3 class="font-medium text-lg text-gray-600 mb-2">Links asociados:</h3>
+      <ul class="list-disc list-inside">
+        <% category.links.each do |link| %>
+          <li>
+            <%= link_to link.url, link.url, class: "text-blue-600 underline" %>
+            <span class="<%= link.isActive ? 'text-green-500' : 'text-red-500' %>">
+              (<%= link.isActive ? 'Activo' : 'Inactivo' %>)
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% else %>
+    <p class="text-gray-500 italic">No hay links asociados a esta categoría.</p>
+  <% end %>
 </div>

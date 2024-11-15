@@ -1,9 +1,15 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, alert: exception.message
+  end
   # GET /products or /products.json
   def index
     @products = Product.all
+    @products = @products.where(category_id: params[:category_id]) if params[:category_id].present?
+    @products = @products.where("LOWER(name) LIKE ?", "%#{params[:search].downcase}%") if params[:search].present?
   end
 
   # GET /products/1 or /products/1.json
@@ -65,7 +71,7 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:name, :description, :category_id, :price, :url)
+      params.require(:product).permit(:name, :description, :category_id, :price, :url, :img_url, :sku)
     end
     
 end

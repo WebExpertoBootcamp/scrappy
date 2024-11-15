@@ -1,6 +1,9 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[ show edit update destroy ]
-
+  load_and_authorize_resource
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, alert: exception.message
+  end
   # GET /categories or /categories.json
   def index
     @categories = Category.all
@@ -21,6 +24,8 @@ class CategoriesController < ApplicationController
 
   # POST /categories or /categories.json
   def create
+    Rails.logger.info "Datos recibidos: #{params.inspect}"
+    Rails.logger.info "Links recibidos: #{[:links_attributes].inspect}"
     @category = Category.new(category_params)
 
     respond_to do |format|
@@ -36,6 +41,8 @@ class CategoriesController < ApplicationController
 
   # PATCH/PUT /categories/1 or /categories/1.json
   def update
+    Rails.logger.info "Datos recibidos: #{params.inspect}"
+    Rails.logger.info "Links recibidos: #{[:links_attributes].inspect}"
     respond_to do |format|
       if @category.update(category_params)
         format.html { redirect_to @category, notice: "Category was successfully updated." }
@@ -65,6 +72,7 @@ class CategoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def category_params
-      params.require(:category).permit(:name, :description)
+      params.require(:category).permit(:name, :description, links_attributes: [:id, :url, :scraper, :isActive, :_destroy])
     end
+
 end

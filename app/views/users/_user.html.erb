@@ -1,0 +1,21 @@
+<div id="<%= dom_id user %>" class="bg-white shadow-md rounded-lg p-6 my-4 flex items-center space-x-4">
+  <!-- Imagen de usuario -->
+  <div>
+    <%= image_tag "scrappy_doo.png", size: "40x40", alt: "User image", class: "rounded-full" %>
+  </div>
+
+  <!-- Información del usuario -->
+  <div>
+    <div class="flex items-center">
+      <h2 class="font-bold text-xl text-gray-800"><%= user.id || 'Usuario' %></h2>
+    </div>
+    <p class="my-2">
+      <strong class="block text-gray-700">Email:</strong>
+      <span class="text-gray-900"><%= user.email %></span>
+    </p>
+    <p class="my-2">
+      <strong class="block text-gray-700">Rol:</strong>
+      <span class="text-gray-900"><%= user.role %></span>
+    </p>
+  </div>
+</div>

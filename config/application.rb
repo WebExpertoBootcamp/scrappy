@@ -27,7 +27,7 @@ module Scrappy
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
-
+    config.active_job.queue_adapter = :sidekiq
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -38,5 +38,15 @@ module Scrappy
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*' # Cambia esto a tu origen específico si es posible
+        resource '*',
+          headers: :any,
+          methods: [:get, :post, :options, :put, :delete]
+      end
+    end
+    
   end
 end

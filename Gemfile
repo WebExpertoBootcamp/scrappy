@@ -36,6 +36,18 @@ gem "bootsnap", require: false
 gem "tailwindcss-rails"
 gem "annotate"
 gem 'devise'
+gem 'nokogiri'
+gem 'selenium-webdriver'
+gem 'jwt'
+gem 'bcrypt', '~> 3.1.7'
+gem 'devise_invitable', '~> 2.0.0'
+gem 'cancancan'
+gem 'sidekiq-cron'
+gem "sidekiq", "~> 7.3"
+gem "httparty"
+gem 'redis'
+gem 'rack-cors'
+gem 'active_model_serializers'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -53,10 +65,15 @@ group :test do
   gem 'factory_bot_rails'
   gem 'database_cleaner-active_record'
   gem 'faker'
+  gem 'simplecov', require: false
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem 'letter_opener'
+  gem 'letter_opener_web'
 end
+
+
 

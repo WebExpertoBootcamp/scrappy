@@ -9,11 +9,20 @@ services:
       POSTGRES_PASSWORD: sa123456
       DATABASE_PORT: 5432
       DATABASE_HOST: db
+      REDIS_URL: redis://redis:6379/0
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     volumes:
-      - .:/scrappy # Monta la carpeta raiz 'scrappy' de tu sistema local en '/scrappy' dentro del contenedor
-    working_dir: /scrappy # Define el directorio de trabajo para Rails
+      - .:/scrappy
+    working_dir: /scrappy
     depends_on:
       - db
+      - redis # Asegura que Redis esté disponible antes de que inicie Rails
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
 
   db:
     image: postgres

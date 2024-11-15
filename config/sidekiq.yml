@@ -1,0 +1,6 @@
+:concurrency: 5
+:queues:
+  - default
+
+:redis:
+  url:  <%= ENV['REDIS_URL'] || 'redis://localhost:6379/0' %>

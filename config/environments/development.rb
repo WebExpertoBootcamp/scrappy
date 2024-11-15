@@ -30,10 +30,12 @@ Rails.application.configure do
 
     config.cache_store = :null_store
   end
-
+  
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
@@ -71,7 +73,11 @@ Rails.application.configure do
   config.action_view.annotate_rendered_view_with_filenames = true
 
   # Uncomment if you wish to allow Action Cable access from any origin.
-  # config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.log_tags = [ :action_cable, :remote_ip ]
+  config.action_cable.url = "/cable"
+  #config.action_cable.allowed_request_origins = [ 'http://127.0.0.1:3000', /http:\/\/127.0.0.1.*/ ]
+  config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/, /file:\/\/*/]
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true

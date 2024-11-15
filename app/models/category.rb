@@ -9,11 +9,13 @@
 #  updated_at  :datetime         not null
 #
 class Category < ApplicationRecord
-    #has_and_belongs_to_many :users
+    has_and_belongs_to_many :users
     has_many :links, dependent: :destroy
+    has_many :products, dependent: :destroy
     validates :name, presence: true, uniqueness: true
     validates :description, presence: true
 
+
     #atributo anidado para crear url dentro de category
-    #accepts_nested_attributes_for :links, allow_destroy: true
+    accepts_nested_attributes_for :links, allow_destroy: true
 end

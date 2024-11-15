@@ -1,0 +1,12 @@
+hello_world_job:
+  cron: "* * * * *" # Cada minuto
+  class: "HelloWorldJob"
+  queue: default
+scraping_job:
+  cron: "*/2 * * * *" # Cada 2 minutos
+  class: "ScrapingJob"
+  queue: default
+send_notifications_job:
+  cron: "* * * * *" # Cada 1 minutos
+  class: "SendNotificationsJob"
+  queue: default
