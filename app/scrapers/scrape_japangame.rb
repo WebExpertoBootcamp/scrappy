@@ -25,7 +25,7 @@ module ScrapeJapangame
           image_url = product.at_css('.dnwoo_product_img img')['src']
 
           existing_product = Product.find_or_initialize_by(name: name)
-          if existing_product.new_record? || existing_product.price != price.gsub(/[^\d.]/, '').to_f || existing_product.updated_at < Date.today
+          if existing_product.new_record? || existing_product.price != price.gsub(/[^\d.]/, '').to_f || existing_product.updated_at.to_date != Date.today
             existing_product.update(
               name: name,
               url: link,
@@ -33,8 +33,12 @@ module ScrapeJapangame
               price: price.gsub(/[^\d.]/, '').to_f, # Limpia el precio y lo convierte a float
               img_url: image_url,
               category_id: category_id,
-              sku: name
+              sku: name,
+              updated_at: Time.now
             )
+            puts "Producto actualizado: #{existing_product.name}"
+          else
+            puts "Producto no necesita actualización: #{existing_product.name}"
           end
 
           # Mostrar la información extraída para cada producto

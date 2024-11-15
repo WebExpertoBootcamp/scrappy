@@ -9,7 +9,7 @@
 
       <!-- Detalles del producto -->
       <div>
-        <p class="mb-4">
+        <p class="mb-4 min-h-[5rem] max-h-[5rem] overflow-hidden text-ellipsis">
           <strong class="block text-lg font-semibold text-gray-900"><%= product.name %></strong>
         </p>
 
@@ -23,7 +23,7 @@
           <span class="text-primary text-2xl font-bold">$<%= product.price %></span>
         </p>
 
-        <p class="mb-4">
+        <p class="mb-4 min-h-[3rem] max-h-[3rem] overflow-hidden text-ellipsis">
           <strong class="block text-lg font-semibold text-gray-900">Categoría:</strong>
           <span class="text-gray-700"><%= product.category.name %></span>
         </p>

@@ -1,44 +1,45 @@
-=begin
 require 'httparty'
-=end
-require 'selenium-webdriver'
-require 'nokogiri'
+require 'json'
+
 module ScrapeCompragamer
   def self.scrape(url = "https://compragamer.com/productos?cate=48", category_id = 8)
-    options = Selenium::WebDriver::Edge::Options.new
-    options.add_argument('--headless') # Ejecuta el navegador en modo headless (sin interfaz gráfica)
-    driver = Selenium::WebDriver.for :edge, options: options
-    wait = Selenium::WebDriver::Wait.new(timeout: 10) # Espera hasta 10 segundos
-    driver.navigate.to url
+    id_sub= url.split("=").last.to_i
+    response = HTTParty.get("https://static.compragamer.com/productos")
+    if response.code == 200
+      products = JSON.parse(response.body).select { |product| product['id_subcategoria'] == id_sub }
+      product_data = products.map do |product|
+        name_product = product['imagenes'].first['nombre'].split("_", 2).last
+        id_img = product['imagenes'].first['id_producto_imagen']
+        link = "https://compragamer.com/producto/#{name_product}_#{id_img}"
+        {
+          title: product['nombre'],
+          description: "Sin descripción disponible.",
+          link: link,
+          image: "https://imagenes.compragamer.com/productos/compragamer_Imganen_general_#{product['imagenes'].first['nombre']}-grn.jpg",
+          price: product['precioEspecial'],
+          #sku: product['id_producto'],
+          sku: product['codigo_principal'].first
 
-    wait.until { driver.find_element(css: 'h3.cg__fw-400.mb-5.product-card__title.ng-star-inserted') }
-    document = Nokogiri::HTML(driver.page_source)
-    #puts document.css('div.products--grid > cgw-product-card.ng-star-inserted > a > div > cgw-item-image img.ng-lazyloading')
-    #puts document.css('div.products--grid > cgw-product-card.ng-star-inserted > a > div > cgw-item-image img.ng-lazyloading').map { |img| img['src'] }
-    product_data = document.css('div.products--grid > cgw-product-card.ng-star-inserted').map do |product|
-    {
-      title: product.at_css('h3.cg__fw-400.mb-5.product-card__title.ng-star-inserted')&.text,
-      link: "https://compragamer.com#{product.at_css('a.cg__primary-card.product-card.responsive.vertical')&.[]('href')}",
-      #image: product.at_css('div.products--grid > cgw-product-card.ng-star-inserted > a > div > cgw-item-image img.ng-lazyloading')&.[]('src'),
-      image: "https://compragamer.com/assets/img/iconoCG.gif",
-      price: product.at_css('span.txt_price')&.text&.gsub(/[^\d,]/, '')&.gsub(',', '.')&.to_f
-    }
-    end
-    puts "Scraping Compragamer..."
-    product_data.each do |product|
-      existing_product = Product.find_or_initialize_by(name: product[:title])
-      existing_product.update(
-        description: "Sin descripción disponible.",
-        price: product[:price],
-        url: product[:link],
-        img_url: product[:image],
-        category_id: category_id
-      )
+        }
+      end
+      puts product_data
+      puts "Scraping Compragamer..."
+      product_data.each do |product|
+        existing_product = Product.find_or_initialize_by(sku: product[:sku])
+        if existing_product.new_record? || existing_product.price != product[:price] || existing_product.updated_at < Date.today
+          existing_product.update(
+            name: product[:title],
+            url: product[:link],
+            description: product[:description],
+            price: product[:price],
+            img_url: product[:image],
+            category_id: category_id,
+            sku: product[:sku]
+          )
+        end
+      end
+    else
+      puts "Error al conectar con la API: #{response.code}"
     end
   end
-
 end
-
-#rails c
-# la funcion scrape tiene valores por defecto
-# ScrapeCompragamer.scrape
