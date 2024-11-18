@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+/* app/assets/stylesheets/application.css */
+
+#scrappy {
+  transition: transform 0.5s ease;
+}
+
+#scrappy:hover {
+  transform: rotate(90deg);
+}

@@ -1,18 +1,22 @@
-<div class="w-full flex flex-col items-center justify-center min-h-screen bg-gray-50">
+<div class="w-full flex flex-col items-center justify-center bg-gray-50">
 
   <h1 class="font-bold text-5xl text-gray-800 mb-4 text-center">
     Price Scraping Fácil para Todos
   </h1>
 
-  <p class="text-lg text-gray-600 max-w-xl text-center">
-    Ya sabe que debe tener en cuenta cuidadosamente cómo valora sus productos. Con cientos de tiendas de comercio electrónico que se lanzan todos los días, es imperativo que se mantenga en la cima y listo con precios competitivos frente a su competencia.
+  <p class="text-lg text-gray-600 text-center">
+    Con cientos de tiendas de comercio electrónico que se lanzan todos los días,
+     es imperativo que se mantenga en la cima y listo con precios competitivos frente a su competencia.
   </p>
   
   <p class="text-lg text-gray-600 max-w-xl text-center mt-4">
     Pero, ¿cómo saber qué precios está cobrando la competencia?
   </p>
   
-  <!-- Imagen centrada con tamaño grande y sombra dorada -->
-  <%= image_tag "scrappy.png", alt: "Scrappy", class: "w-40 h-auto shadow-lg shadow-yellow-500 mb-8 rounded-full" %>
+  <!-- Imagen con animaciones -->
+<%= image_tag "scrappy.png", 
+              alt: "Scrappy", 
+              class: "w-40 h-auto shadow-lg shadow-yellow-500 mb-8 rounded-full transition-transform duration-500 transform hover:rotate-90 cursor-pointer", 
+              id: "scrappy" %>
 
 </div>

@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
   mount ActionCable.server => '/cable' # Ruta para WebSocket
   mount Sidekiq::Web => "/sidekiq" # mount Sidekiq::Web in your Rails app
-
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
+  
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
     sign_out: 'logout',
@@ -18,6 +20,7 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   get "landing/index"
+  get 'docs', to: 'landing#docs'
   get "up" => "rails/health#show", as: :rails_health_check
   get '/health', to: 'health#health'
 
