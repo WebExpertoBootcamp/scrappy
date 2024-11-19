@@ -14,9 +14,21 @@
   </p>
   
   <!-- Imagen con animaciones -->
-<%= image_tag "scrappy.png", 
-              alt: "Scrappy", 
-              class: "w-40 h-auto shadow-lg shadow-yellow-500 mb-8 rounded-full transition-transform duration-500 transform hover:rotate-90 cursor-pointer", 
+  
+  <%= link_to image_tag("scrappy.png", 
+                     alt: "Scrappy", 
+                     class: "w-40 h-auto shadow-lg shadow-yellow-500 mb-8 rounded-full transition-transform duration-500 transform hover:rotate-90 cursor-pointer"), 
+              "/docs", 
               id: "scrappy" %>
 
 </div>
+<script>document.addEventListener('DOMContentLoaded', () => {
+    const scrappy = document.getElementById('scrappy');
+
+    scrappy.addEventListener('click', () => {
+        scrappy.style.transition = 'transform 3s';
+        scrappy.style.transform = 'rotate(2160deg)';
+
+
+    });
+}); </script>
