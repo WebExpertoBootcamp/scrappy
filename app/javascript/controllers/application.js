@@ -9,3 +9,5 @@ window.Stimulus = application
 application.register("nested-form", NestedFormController);
 
 export { application }
+
+

@@ -1,0 +1,288 @@
+openapi: 3.0.1
+info:
+  title: Scrappy API V1
+  version: v1
+  description: API de Scrappy para gestionar usuarios y suscripciones a categorías.
+paths:
+  "/auth/register":
+    post:
+      summary: Registrar usuario
+      tags:
+        - Autenticación
+      parameters: []
+      responses:
+        "201":
+          description: Usuario creado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    "$ref": "#/components/schemas/User"
+                  subscribed_categories:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/Category"
+              examples:
+                success:
+                  summary: Registro exitoso
+                  value:
+                    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0NTY3ODkwLCJleHBpcnkiOiI1MjUwZTZlYjM4YTc2ZGIwZjgzZTgzNDEwNzA4YTIwY2MiLCJpYXQiOjE2MjM2Mzc2NjV9.CDCesUwp9bbm3gfnpHXemVdrPTX0pqKlPax-F8v3alA"
+                    user:
+                      id: 12345
+                      email: "usuario@ejemplo.com"
+                      name: "Juan Pérez"
+                      created_at: "2024-11-18T10:00:00Z"
+                      updated_at: "2024-11-18T10:00:00Z"
+                    subscribed_categories:
+                      - id: 1
+                        name: "Tecnología"
+                        description: "Noticias y artículos sobre tecnología."
+                      - id: 2
+                        name: "Gaming"
+                        description: "Todo sobre videojuegos y consolas."
+        "422":
+          description: Error de validación
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+              examples:
+                validation_error:
+                  summary: Error de validación por falta de contraseña
+                  value:
+                    errors:
+                      - "El campo 'password' es obligatorio."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                password_confirmation:
+                  type: string
+                category_ids:
+                  type: array
+                  items:
+                    type: integer
+              required:
+                - email
+                - password
+                - password_confirmation
+              example:
+                email: "usuario@ejemplo.com"
+                password: "secreto123"
+                password_confirmation: "secreto123"
+                category_ids:
+                  - 1
+                  - 2
+  "/auth/login":
+    post:
+      summary: Iniciar sesión
+      tags:
+        - Autenticación
+      parameters: []
+      responses:
+        "200":
+          description: Sesión iniciada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    "$ref": "#/components/schemas/User"
+              examples:
+                success:
+                  summary: Inicio de sesión exitoso
+                  value:
+                    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0NTY3ODkwLCJleHBpcnkiOiI1MjUwZTZlYjM4YTc2ZGIwZjgzZTgzNDEwNzA4YTIwY2MiLCJpYXQiOjE2MjM2Mzc2NjV9.CDCesUwp9bbm3gfnpHXemVdrPTX0pqKlPax-F8v3alA"
+                    user:
+                      id: 12345
+                      email: "usuario@ejemplo.com"
+                      name: "Juan Pérez"
+                      created_at: "2024-11-18T10:00:00Z"
+                      updated_at: "2024-11-18T10:00:00Z"
+        "401":
+          description: Credenciales inválidas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                invalid_credentials:
+                  summary: Credenciales incorrectas
+                  value:
+                    error: "Correo o contraseña incorrectos."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+              example:
+                email: "usuario@ejemplo.com"
+                password: "secreto123"
+  "/auth/subscription":
+    put:
+      summary: Actualizar suscripción
+      tags:
+        - Suscripciones
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token JWT del usuario
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Suscripción actualizada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  subscribed_categories:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/Category"
+              examples:
+                success:
+                  summary: Suscripción actualizada exitosamente
+                  value:
+                    message: "Suscripción actualizada con éxito."
+                    subscribed_categories:
+                      - id: 1
+                        name: "Tecnología"
+                        description: "Noticias y artículos sobre tecnología."
+        "400":
+          description: Categorías no proporcionadas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                missing_categories:
+                  summary: Error por no proporcionar categorías
+                  value:
+                    error: "El campo 'category_ids' es obligatorio."
+        "401":
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                unauthenticated:
+                  summary: El token no es válido
+                  value:
+                    error: "No estás autenticado. Por favor inicia sesión."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category_ids:
+                  type: array
+                  items:
+                    type: integer
+              required:
+                - category_ids
+              example:
+                category_ids:
+                  - 1
+                  - 3
+  "/auth/get_categories":
+    get:
+      summary: Listar categorías
+      tags:
+        - Categorías
+      responses:
+        "200":
+          description: Categorías listadas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Category"
+              examples:
+                categories:
+                  summary: Ejemplo de categorías disponibles
+                  value:
+                    - id: 1
+                      name: "Tecnología"
+                      description: "Noticias y artículos sobre tecnología."
+                    - id: 2
+                      name: "Gaming"
+                      description: "Todo sobre videojuegos y consolas."
+  components:
+    schemas:
+      User:
+        type: object
+        properties:
+          id:
+            type: integer
+          email:
+            type: string
+          name:
+            type: string
+          created_at:
+            type: string
+            format: date-time
+          updated_at:
+            type: string
+            format: date-time
+      Category:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+          description:
+            type: string
+          created_at:
+            type: string
+            format: date-time
+          updated_at:
+            type: string
+            format: date-time
+servers:
+  - url: https://api.scrappy.com
+    variables:
+      defaultHost:
+        default: api.scrappy.com

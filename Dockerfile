@@ -28,4 +28,4 @@ RUN bundle install
 EXPOSE 3000
 
 # Comando por defecto para preparar la base de datos y arrancar el servidor de Rails
-CMD ["sh", "-c", "bundle exec rails db:create && bundle exec rails db:migrate && bundle exec sidekiq & bundle exec rails server -b '0.0.0.0'"]
+#CMD ["sh", "-c", "bundle exec rails db:create && bundle exec rails db:migrate && bundle exec sidekiq & bundle exec rails server -b '0.0.0.0'"]
