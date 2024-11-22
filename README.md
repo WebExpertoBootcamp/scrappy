@@ -20,6 +20,21 @@ cd scrappy
 
 ### 2. Construir y levantar contenedores de Docker
 
+Descomentar la linea nro 31 del Dockerfile
+
+# Comando por defecto para preparar la base de datos y arrancar el servidor de Rails
+
+Nota: En caso de dejarla comentada se deben ejecutar los comando a traves de la terminal, luego de levantar el contenedor.
+
+```bash
+bundle exec rails db:create
+bundle exec rails db:migrate
+bundle exec sidekiq
+bundle exec rails server -b '0.0.0.0'
+```
+
+Levantar el contendor
+
 ```bash
 docker-compose up --build
 ```
